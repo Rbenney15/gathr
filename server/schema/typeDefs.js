@@ -57,6 +57,7 @@ const typeDefs = gql`
     addEvent(name: String!, date: String!, description: String!): Event
     addItem(eventId: ID!, name: String!): Event
     addAttendee(eventId: ID!, nickname: String!, attending: Boolean!): Event
+    claimItem(eventId: ID!, itemId: ID!, attendeeId: ID!): Event
   }
 `;
 
