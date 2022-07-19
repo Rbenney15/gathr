@@ -26,3 +26,5 @@ const itemSchema = new Schema(
 itemSchema.virtual('claimed').get(function() {
   return !(this.broughtBy === null || this.broughtBy === undefined);
 });
+
+module.exports = itemSchema;
