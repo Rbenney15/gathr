@@ -3,6 +3,13 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
   {
+    // type User {
+    //   _id: ID
+    //   username: String
+    //   email: String
+    //   events: [Event]
+    //   (v) eventCount: Int
+    // }
     username: {
       type: String,
       required: true,
@@ -33,6 +40,12 @@ const userSchema = new Schema(
     }
   }
 );
+
+userSchema.virtual('eventCount').get(function() {
+  return this.events.length;
+})
+
+//// AUTH
 
 // pre-save middleware to create password
 userSchema.pre('save', async function(next) {
