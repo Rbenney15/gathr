@@ -1,8 +1,13 @@
 import React, { useState} from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import LoginForm from '../src/components/LoginForm';
+import Nav from './components/navbar';
+import HomePage from './components/homepage';
 // import Signup from './components/Signup';
 
 function App() {
+
   const adminUser = {
     email: "admin@admin.com",
     password: "admin123"
@@ -31,17 +36,28 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {/* <Signup /> */}
-      {(user.email != "") ? (
-        <div className="welcome">
-          <h2>Welcome, <span>{user.name}</span></h2>
-          <button onClick={Logout}>Logout</button>
-        </div>
-      ): (
-        <LoginForm Login={Login} error={error} />
-      )}
-    </div>
+    <Router>
+      <Nav></Nav>
+      <Routes>
+        <Route 
+          path='/'
+          element={<HomePage />}
+        />
+        <Route
+          path='/login'
+          element={(user.email != "") ? (
+            <div className="welcome">
+              <h2>Welcome, <span>{user.name}</span></h2>
+              <button onClick={Logout}>Logout</button>
+            </div>
+            ) : (
+            <LoginForm Login={Login} error={error} />
+          )}
+        />
+      </Routes>
+    </Router>
+
+
   );
 }
 
