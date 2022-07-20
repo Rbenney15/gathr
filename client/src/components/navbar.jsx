@@ -11,6 +11,8 @@ function Nav () {
 
                 <nav>
                     <Link to='/login'>Login</Link>
+                
+                    <Link to='/signup'>Signup</Link>
                 </nav>
             </div>
         </header>
