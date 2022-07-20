@@ -1,41 +1,40 @@
-import React, { useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 import LoginForm from '../src/components/LoginForm';
 import Nav from './components/navbar';
 import HomePage from './components/homepage';
-// import Signup from './components/Signup';
+import Signup from './components/signup';
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
-
-  const adminUser = {
-    email: "admin@admin.com",
-    password: "admin123"
-  }
-
-  const [user, setUser] = useState({name: "", email: ''});
-  const [error, setError] = useState("");
-
-  const Login = details => {
-    console.log(details);
-
-    if (details.email == adminUser.email && details.password == adminUser.password) {
-      console.log('Logged In');
-      setUser({
-        name: details.name,
-        emai: details.email
-      });
-    } else {
-      console.log('Details do not match!')
-      setError('Details do not match!');
-    }
-  }
-
-  const Logout = () => {
-    setUser({name: "", email: ''});
-  }
-
   return (
+    <ApolloProvider client={client}>
     <Router>
       <Nav></Nav>
       <Routes>
@@ -45,18 +44,15 @@ function App() {
         />
         <Route
           path='/login'
-          element={(user.email != "") ? (
-            <div className="welcome">
-              <h2>Welcome, <span>{user.name}</span></h2>
-              <button onClick={Logout}>Logout</button>
-            </div>
-            ) : (
-            <LoginForm Login={Login} error={error} />
-          )}
+          element={<LoginForm />}
+        />
+        <Route
+        path='/signup'
+        element={<Signup />}
         />
       </Routes>
     </Router>
-
+    </ApolloProvider>
 
   );
 }
