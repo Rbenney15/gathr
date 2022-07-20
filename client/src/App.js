@@ -12,6 +12,8 @@ import LoginForm from '../src/components/LoginForm';
 import Nav from './components/navbar';
 import HomePage from './components/homepage';
 import Signup from './components/signup';
+import UserDash from './components/dashboard';
+import CreateEvent from './components/EventCreate';
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -50,7 +52,12 @@ function App() {
         path='/signup'
         element={<Signup />}
         />
+        <Route
+          path='/create-event'
+          element={<CreateEvent />}
+        />
       </Routes>
+      <UserDash />
     </Router>
     </ApolloProvider>
 
