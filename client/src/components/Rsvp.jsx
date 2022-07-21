@@ -11,17 +11,19 @@ function Rsvp () {
                 </div>
                 <br />
                 <div>
-                    <label for='guest-rsvp'>RSVP: </label>
+                    <form>
+                    <label for='guest-rsvp'>Items to bring: </label>
                     <input name='guest-rsvp-yes' type='radio'></input>
-                    <label for='guest-rsvp-yes'>Yes</label>
+                    <label for='guest-rsvp-yes'>Burgers</label>
                     <input name='guest-rsvp-no' type='radio'></input>
-                    <label for='guest-rsvp-no'>No</label>
+                    <label for='guest-rsvp-no'>Buns</label>
+                    </form>
                 </div>
                 <br />
                 <div>
                     <label for='guest-item'>
-                         What item will you be bringing?:
-                    <textarea />
+                         Comment:
+                    <textarea placeholder="Leave a comment" />
                     </label>
                 </div>
             </form>
