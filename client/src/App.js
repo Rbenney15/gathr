@@ -14,7 +14,8 @@ import HomePage from "./components/homepage";
 import Signup from "./components/signup";
 import UserDash from "./components/dashboard";
 import CreateEvent from "./components/EventCreate";
-// import Rsvp from "./components/Rsvp";
+import Rsvp from "./components/Rsvp";
+import Footer from "./components/footer";
 
 
 const httpLink = createHttpLink({
@@ -47,8 +48,13 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/create-event" element={<CreateEvent />} />
         </Routes>
-        {/* <Rsvp /> */}
+        <Footer />
+        <div>
+        <Rsvp />
+        </div>
+        <div>
         <UserDash />
+        </div>
       </Router>
     </ApolloProvider>
   );
