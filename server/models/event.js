@@ -49,7 +49,7 @@ const eventSchema = new Schema(
 eventSchema.virtual('completed').get(function() {
   // return event date before current date
 });
-eventSchema.virtual('attendees').get(function() {
+eventSchema.virtual('attendeeCount').get(function() {
   return this.attendees.length;
 });
 eventSchema.virtual('hasEverything').get(function() {
