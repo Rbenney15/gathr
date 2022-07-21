@@ -12,13 +12,13 @@ input, button {
   outline: none;
 }
 
-.App {
+/* .App {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #53565A;
-}
+} */
 
 form {
   display: block;
@@ -34,7 +34,7 @@ form:after {
   right: -5px;
   bottom: -5px;
   z-index: 1;
-  background-image: linear-gradient(to bottom right, #FFCE00, #FE4880);
+  /* background-image: linear-gradient(to bottom right, #FFCE00, #FE4880); */
 }
 
 form .form-inner {
@@ -46,7 +46,7 @@ form .form-inner {
 }
 
 form .form-inner h2 {
-  color: #888;
+  color: black;
   font-size: 28px;
   font-weight: 500;
   margin-bottom: 30px;
@@ -67,7 +67,7 @@ form .form-inner .form-group label {
 }
 
 form .form-inner .form-group:focus-within label {
-  color: #FE4880; 
+  color: Orange; 
 }
 
 form .form-inner .form-group input {
@@ -88,7 +88,7 @@ form .form-inner input[type="submit"],
   display: inline-block;
   padding: 10px 15px;
   border-radius: 8px;
-  background-image: linear-gradient(to right, #FFCE00 50%, #FFCE00 50%, #FE4880);
+  background-image: linear-gradient(to right, Black 50%, ORANGE 50%);
   background-size: 200%;
   background-position: 0%;
   color: #FFF;
@@ -96,26 +96,7 @@ form .form-inner input[type="submit"],
   cursor: pointer;
 }
 
-form .form-inner input[type="submit"]:hover,
-.welcome button:hover {
+form .form-inner input[type="submit"]:hover {
   background-position: 100% 0%;
 }
 
-.welcome {
-  width: 100%;
-  max-width: 480px;
-  background-color: #FFF;
-  padding: 15px 30px;
-}
-
-.welcome h2 {
-  color: #888;
-  font-size: 28px;
-  font-weight: 500;
-  margin-bottom: 30px;
-}
-
-.welcome h2 span {
-  color:#FE4880;
-  font-weight: 700;
-}

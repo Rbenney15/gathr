@@ -1,4 +1,4 @@
-// import '../CSS/LoginForm.css';
+import '../CSS/LoginForm.css';
 
 // function LoginForm({ Login, error }) {
 //     const [details, setDetails] = useState({name: "", email: "", password: ""});
@@ -54,10 +54,10 @@ const LoginForm = (props) => {
             <div className="form-inner">
                 <h2>Login</h2>
                 {(error !== "") ? ( <div className="error">{error}</div> ) : ""}
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor='name'>Name:</label>
                     <input type='text' name='name' id='name' onSubmit={handleFormSubmit} />
-                </div>
+                </div> */}
                 <div className="form-group">
                     <label htmlFor='email'>Email:</label>
                     <input type='email' name='email' id='email' onSubmit={handleChange} />
