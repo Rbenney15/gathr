@@ -1,0 +1,21 @@
+* {
+    background-color: lightgrey;
+}
+  
+
+h1 {
+    font-weight: 500px;
+    color: yellow;
+    text-decoration: none;
+}
+  
+.navbar {
+  color: black;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.header {
+    background-color: darkgrey;
+}
