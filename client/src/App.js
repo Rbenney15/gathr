@@ -14,6 +14,7 @@ import HomePage from './components/homepage';
 import Signup from './components/signup';
 import UserDash from './components/dashboard';
 import CreateEvent from './components/EventCreate';
+import Rsvp from './components/Rsvp';
 
 const httpLink = createHttpLink({
   uri: "/graphql",
