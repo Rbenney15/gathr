@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
 
 function Rsvp () {
     return (
@@ -13,19 +12,18 @@ function Rsvp () {
                 <br />
                 <div>
                     <label for='guest-rsvp'>RSVP: </label>
-                    <input type='radio' value='Yes'>Yes</input>
-                    <input type='radio' value='No'>No</input>
+                    <input name='guest-rsvp-yes' type='radio'></input>
+                    <label for='guest-rsvp-yes'>Yes</label>
+                    <input name='guest-rsvp-no' type='radio'></input>
+                    <label for='guest-rsvp-no'>No</label>
                 </div>
                 <br />
                 <div>
                     <label for='guest-item'>
-                        What item will you be bringing?:
+                         What item will you be bringing?:
                     <textarea />
                     </label>
                 </div>
-                <Link to='/rsvp'>
-                <button>RSVP</button>
-                </Link>
             </form>
         </div>
     )
