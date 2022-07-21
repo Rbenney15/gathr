@@ -88,10 +88,10 @@ form .form-inner input[type="submit"],
   display: inline-block;
   padding: 10px 15px;
   border-radius: 8px;
-  background-image: linear-gradient(to right, Black 50%, ORANGE 50%);
+  background-image: linear-gradient(to right, Yellow 50%, rgb(237, 237, 102) 50%);
   background-size: 200%;
   background-position: 0%;
-  color: #FFF;
+  color: Black;
   font-weight: 700;
   cursor: pointer;
 }
