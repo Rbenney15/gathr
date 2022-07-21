@@ -1,10 +1,9 @@
 import React from 'react';
-// import Event from './event';
+import { Link } from 'react-router-dom';
 
 function Rsvp () {
     return (
         <div>
-            {/* <Event /> */}
             <h2>RSVP To Event</h2>
             <form>
                 <div>
@@ -24,6 +23,9 @@ function Rsvp () {
                     <textarea />
                     </label>
                 </div>
+                <Link to='/rsvp'>
+                <button>RSVP</button>
+                </Link>
             </form>
         </div>
     )
