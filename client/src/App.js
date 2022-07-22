@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import LoginForm from "../src/components/LoginForm";
+import Login from "../src/components/Login";
 import Nav from "./components/navbar";
 import HomePage from "./components/homepage";
 import Signup from "./components/signup";
@@ -44,7 +44,7 @@ function App() {
         <Nav></Nav>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/create-event" element={<CreateEvent />} />
         </Routes>
