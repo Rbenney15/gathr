@@ -15,7 +15,7 @@ import Signup from "./components/signup";
 import UserDash from "./components/dashboard";
 import CreateEvent from "./components/EventCreate";
 import Rsvp from "./components/Rsvp";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 
 
 const httpLink = createHttpLink({
