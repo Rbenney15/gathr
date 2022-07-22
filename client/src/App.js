@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import LoginForm from "../src/components/LoginForm";
+import Login from "./components/Login";
 import Nav from "./components/navbar";
 import HomePage from "./components/homepage";
 import Signup from "./components/signup";
@@ -41,23 +41,48 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Nav></Nav>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/create-event" element={<CreateEvent />} />
-        </Routes>
-        <Footer />
-        <div>
-        <Rsvp />
-        </div>
-        <div>
-        <UserDash />
+        <div className="flex-column justify-flex-start min-100-vh">
+          <Nav />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/userdash">
+                <Route path=":username" element={<UserDash />} />
+                <Route path="" element={<UserDash />} />
+              </Route>
+              <Route path="/create-event/:id" element={<CreateEvent />} />
+              <Route path="rsvp" element={<Rsvp />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
       </Router>
     </ApolloProvider>
   );
 }
+// function App() {
+//   return (
+//     <ApolloProvider client={client}>
+//       <Router>
+//         <Nav></Nav>
+//         <Routes>
+//           <Route path="/" element={<HomePage />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/signup" element={<Signup />} />
+//           <Route path="/create-event" element={<CreateEvent />} />
+//         </Routes>
+//         <Footer />
+//         <div>
+//         <Rsvp />
+//         </div>
+//         <div>
+//         <UserDash />
+//         </div>
+//       </Router>
+//     </ApolloProvider>
+//   );
+// }
 
 export default App;
