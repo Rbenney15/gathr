@@ -1,13 +1,3 @@
-// import '../CSS/LoginForm.css';
-
-// function LoginForm({ Login, error }) {
-//     const [details, setDetails] = useState({name: "", email: "", password: ""});
-     
-//     const submitHandler = e => {
-//         e.preventDefault();
-
-//         Login(details);
-//     }
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from './utils/mutations';

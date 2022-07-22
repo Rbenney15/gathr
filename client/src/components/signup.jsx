@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from './utils/mutations';
 
-import Auth from './utils/auth';
+// import Auth from './utils/auth';
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -31,7 +31,7 @@ const Signup = () => {
         variables: { ...formState },
       });
 
-      Auth.login(data.addUser.token);
+      // Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
