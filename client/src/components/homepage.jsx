@@ -23,7 +23,6 @@ function HomePage ({updatePage}) {
                 Host, Plan, Gather
             </h3>
             <Link to='/login'>
-
                 <button>Create Event</button>
             </Link>
         </div>

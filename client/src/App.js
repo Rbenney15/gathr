@@ -9,14 +9,16 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 import Login from "../src/components/Login";
+import Signup from "./components/signup";
+
 import Nav from "./components/navbar";
 import HomePage from "./components/homepage";
-import Signup from "./components/signup";
-import UserDash from "./components/dashboard";
-import CreateEvent from "./components/EventCreate";
-import Rsvp from "./components/Rsvp";
 import Footer from "./components/footer";
 
+import UserDash from "./components/dashboard";
+import CreateEvent from "./components/EventCreate";
+import Event from "./components/event";
+import Rsvp from "./components/Rsvp";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
@@ -49,9 +51,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/userdash" element={<UserDash />}>
-                <Route path=":id" element={<UserDash />} />
+                <Route path="event" element={<Event />} />
+                <Route path=":eventId" element={<UserDash />} />
               </Route>
-              <Route path='/create-event' element={<CreateEvent />}>
+              <Route path="/create-event" element={<CreateEvent />}>
                 <Route path=":id" element={<CreateEvent />} />
                 <Route path="rsvp" element={<Rsvp />} />
               </Route>

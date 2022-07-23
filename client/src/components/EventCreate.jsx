@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function CreateEvent () {
     return (
@@ -33,6 +34,9 @@ function CreateEvent () {
                     <input type='checkbox'></input>
                     <label>Peanuts</label>
                 </div>
+                <Link to="/event:id">
+                    <button>Create Event</button>
+                </Link>
             </form>
         </div>
     )
