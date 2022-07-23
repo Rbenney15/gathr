@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "./utils/mutations";
+import { ADD_USER } from "../utils/mutations";
 
-import Auth from "./utils/auth";
+import Auth from "../utils/auth";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -47,17 +47,17 @@ const Signup = () => {
       <Card.Body>
         <Card.Title>Sign Up</Card.Title>
         <Form>
-          <Form.Group classname='mb-3' onSubmit={handleFormSubmit}>
+          <Form.Group className='mb-3' onSubmit={handleFormSubmit}>
             <Form.Label>Username</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.username} type='text' placeholder='Username'></Form.Control>
+            <Form.Control onChange={handleChange} defaultValue={formState.username} type='text' placeholder='Username'></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3' onSubmit={handleFormSubmit}>
             <Form.Label>Email</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.email} type='email' placeholder='Email'></Form.Control>
+            <Form.Control onChange={handleChange} defaultValue={formState.email} type='email' placeholder='Email'></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3' onSubmit={handleFormSubmit}>
             <Form.Label>Password</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.password} type='password' placeholder='Password'></Form.Control>
+            <Form.Control onChange={handleChange} defaultValue={formState.password} type='password' placeholder='Password'></Form.Control>
           </Form.Group>
           <Button variant='primary' type="submit">Sign Up</Button>
         </Form>
