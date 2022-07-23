@@ -13,7 +13,6 @@ function CreateEvent () {
     }
     return (
         <div>
-            {/* <Redirect to={{pathname: "/login"}} /> */}
             <h2>Create a New Event</h2>
             <form>
                 <div>

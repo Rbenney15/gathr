@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useParams, Navigate } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from '../utils/queries';
@@ -7,16 +7,16 @@ import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from '../utils/queries';
 import Auth from '../utils/auth';
 
 function UserDash () {
-    // const { username: userParam } = useParams();
+    const { username: userParam } = useParams();
 
-  const { loading, data } = useQuery( QUERY_ME );
+  const { loading, data } = useQuery( QUERY_ME, {variables: {username: userParam}} );
 
   const user = data?.me || {};
-
+  console.log(useParams())
   // navigate to personal profile page if username is yours
-//   if (Auth.loggedIn() && Auth.getDashboard().data.username === userParam) {
-//     return <Navigate to="/dashboard:id" />;
-//   }
+  if (Auth.loggedIn() && Auth.getDashboard().data.username === userParam) {
+    return <Navigate to="/dashboard:id" />;
+  }
 
   if (loading) {
     return <div>Loading...</div>;

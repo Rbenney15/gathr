@@ -3,12 +3,13 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
-import { useNavigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN_USER);
+  
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -19,29 +20,31 @@ const Login = (props) => {
       [name]: value,
     });
   };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleClick = useCallback(() => navigate("/dashboard", {replace: true}), [navigate])   
+  // const handleClick = useCallback(() => navigate("/dashboard", {replace: true}), [navigate])   
 
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const { data } = await login({
         variables: { ...formState },
       });
-
+      
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
     }
-
+    
     // clear form values
     setFormState({
       email: '',
       password: '',
     });
+    
+    // handleClick();
+
   };
 
   return (
@@ -69,7 +72,7 @@ const Login = (props) => {
                 value={formState.password}
                 onChange={handleChange}
               />
-                <button className="btn d-block w-100" type="button" onClick={handleClick}>
+                <button className="btn d-block w-100" type="submit">
                   Submit
                 </button>
             </form>
