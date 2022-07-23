@@ -8,7 +8,6 @@ const attendeeSchema = new Schema(
     //   _id: ID
     //   nickname: String
     //   respondedAt: String
-    //   attending: Boolean
     //   items: [Item]
     //   (v) bringingSomething: Boolean
     // }
@@ -22,9 +21,6 @@ const attendeeSchema = new Schema(
       type: Date,
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
-    },
-    attending: {
-      type: Boolean
     },
     items: [itemSchema]
   },

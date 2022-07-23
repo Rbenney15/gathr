@@ -94,21 +94,21 @@ const resolvers = {
 
       throw new AuthenticationError('You must be logged in to create an event');
     },
-    addItem: async (parent, { eventId, itemName }, context) => {
-      if (context.user) 
-      {
-        const updatedEvent = await Event.findOneAndUpdate(
-          { _id: eventId },
-          { $push: { items: { name: itemName } } },
-          { new: true, runValidators: true }
-        );
+    // addItem: async (parent, { eventId, itemName }, context) => {
+    //   if (context.user) 
+    //   {
+    //     const updatedEvent = await Event.findOneAndUpdate(
+    //       { _id: eventId },
+    //       { $push: { items: { name: itemName } } },
+    //       { new: true, runValidators: true }
+    //     );
 
-        return updatedEvent;
-      }
+    //     return updatedEvent;
+    //   }
 
-      throw new AuthenticationError('You must be logged in to assign an item to an event');
-    },
-    addAttendee: async (parent, { eventId, attendeeNickname, attending }) => {
+    //   throw new AuthenticationError('You must be logged in to assign an item to an event');
+    // },
+    sendRSVP: async (parent, { eventId, attendeeNickname, itemString }) => {
       // if invite authentication passes
       {
         const updatedEvent = await Event.findOneAndUpdate(
@@ -120,7 +120,7 @@ const resolvers = {
         return updatedEvent;
       }
 
-      throw new AuthenticationError('You must be logged in to rsvp an attendee to an event');
+      // throw new AuthenticationError('You must be logged in to rsvp an attendee to an event');
     },
     // claimItem: async (parent, { eventId, itemId, attendeeId }) => {
     //   // if invite authentication passes
