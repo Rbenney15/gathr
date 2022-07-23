@@ -1,3 +1,5 @@
+// import '../CSS/LoginForm.css';
+
 // function LoginForm({ Login, error }) {
 //     const [details, setDetails] = useState({name: "", email: "", password: ""});
      
@@ -11,11 +13,6 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from './utils/mutations';
 
 import Auth from './utils/auth';
-
-// bootstrap components
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Card from 'react-bootstrap/Card';
 
 const LoginForm = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -53,28 +50,25 @@ const LoginForm = (props) => {
   };
 
     return (
-      <Card style={{ width: '100%' }}>
-      <Card.Body>
-        <Card.Title>Login</Card.Title>
-        <Form>
-          <Form.Group classname='mb-3' onSubmit={handleFormSubmit}>
-            <Form.Label>Username</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.username} type='username' placeholder='Username'></Form.Control>
-          </Form.Group>
-          <Form.Group className='mb-3' onSubmit={handleFormSubmit}>
-            <Form.Label>Password</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.password} type='password' placeholder='Password'></Form.Control>
-          </Form.Group>
-          <Button variant='primary' type="submit">Login</Button>
-        </Form>
-        <Card.Text>
-          Don't have a login? Sign up here
-        </Card.Text>
-
-        {error && <div>Signup failed</div>}
-        
-      </Card.Body>
-    </Card>
+        <form onSubmit={handleFormSubmit}>
+            <div className="form-inner">
+                <h2>Login</h2>
+                {(error !== "") ? ( <div className="error">{error}</div> ) : ""}
+                <div className="form-group">
+                    <label htmlFor='name'>Name:</label>
+                    <input type='text' name='name' id='name' onSubmit={handleFormSubmit} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor='email'>Email:</label>
+                    <input type='email' name='email' id='email' onSubmit={handleChange} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor='password'>Password:</label>
+                    <input type='password' name='password' id='password' onSubmit={handleFormSubmit} />
+                </div>
+                <input type="submit" value="Login" />
+            </div>
+        </form>
     )
 }
 

@@ -5,15 +5,23 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     // type Query {
-    //   me: User
-    //   users: [User]
-    //   user(username: String!): User
-    //   events(username: String): [Event]
-    //   event(_id: ID!): Event
+      // me: User
+      // users: [User]
+      // user(username: String!): User
+      // events(username: String): [Event]
+      // event(_id: ID!): Event
     // }
 
-    me: async () => {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select('-__v -password')
+          .populate('events');
 
+        return userData;
+      }
+
+      throw new AuthenticationError('Not logged in');
     },
     users: async () => {
       return User.find()
@@ -37,7 +45,6 @@ const resolvers = {
         .populate('items')
         .populate('attendees');
     }
-    // ...
   },
   
 
@@ -87,21 +94,21 @@ const resolvers = {
 
       throw new AuthenticationError('You must be logged in to create an event');
     },
-    addItem: async (parent, { eventId, itemName }, context) => {
-      if (context.user) 
-      {
-        const updatedEvent = await Event.findOneAndUpdate(
-          { _id: eventId },
-          { $push: { items: { name: itemName } } },
-          { new: true, runValidators: true }
-        );
+    // addItem: async (parent, { eventId, itemName }, context) => {
+    //   if (context.user) 
+    //   {
+    //     const updatedEvent = await Event.findOneAndUpdate(
+    //       { _id: eventId },
+    //       { $push: { items: { name: itemName } } },
+    //       { new: true, runValidators: true }
+    //     );
 
-        return updatedEvent;
-      }
+    //     return updatedEvent;
+    //   }
 
-      throw new AuthenticationError('You must be logged in to assign an item to an event');
-    },
-    addAttendee: async (parent, { eventId, attendeeNickname, attending }) => {
+    //   throw new AuthenticationError('You must be logged in to assign an item to an event');
+    // },
+    sendRSVP: async (parent, { eventId, attendeeNickname, itemString }) => {
       // if invite authentication passes
       {
         const updatedEvent = await Event.findOneAndUpdate(
@@ -113,7 +120,7 @@ const resolvers = {
         return updatedEvent;
       }
 
-      throw new AuthenticationError('You must be logged in to rsvp an attendee to an event');
+      // throw new AuthenticationError('You must be logged in to rsvp an attendee to an event');
     },
     // claimItem: async (parent, { eventId, itemId, attendeeId }) => {
     //   // if invite authentication passes
