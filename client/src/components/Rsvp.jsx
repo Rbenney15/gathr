@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // bootstrap components
 import Button from 'react-bootstrap/Button';
