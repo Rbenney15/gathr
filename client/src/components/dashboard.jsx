@@ -5,6 +5,9 @@ import { useQuery } from '@apollo/client';
 import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from '../utils/queries';
 
 import Auth from '../utils/auth';
+// bootstrap components
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 function UserDash () {
     const { username: userParam } = useParams();
@@ -31,25 +34,31 @@ function UserDash () {
     );
   }
     return (
-        <div>
-            <h1>Welcome {user.username}!</h1>
-            <h3>Your Upcoming Events</h3>
-            <div>
-                <p>Event 1</p>
-                <p>10:00pm Thursday August 11, 2022</p>
-                <p># RSVPs</p>
+        <div className="container d-flex justify-content-center">
+            <div className="card col-10">
+                <div className="card-body">
+                    <h2 className="card-title">Welcome User!</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Event</th>
+                                    <th scope="col">Date and Time</th>
+                                    <th scope="col">Number of RSVPs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Event name</td>
+                                    <td>Event time</td>
+                                    <td>attendeeCount</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            <Link to='/create-event'>
+                                <button type="submit" className="btn btn-primary">Create Event</button>
+                            </Link>
+                </div>
             </div>
-            <div>
-                <p>Event 2</p>
-                <p>10:00pm Friday August 12, 2022</p>
-                <p># RSVPs</p>
-            </div>
-            <div>
-                <p>We'll have to inline block these to line them up obviously but sorry if they look confusing right now</p>
-            </div>
-            <Link to='/create-event'>
-                <button>Create New Event</button>
-            </Link>
         </div>
     )
 }
