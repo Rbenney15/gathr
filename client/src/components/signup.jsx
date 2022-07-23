@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "./utils/mutations";
+import { ADD_USER } from "../utils/mutations";
 
-import Auth from "./utils/auth";
+import Auth from "../utils/auth";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
