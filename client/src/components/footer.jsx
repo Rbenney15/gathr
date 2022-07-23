@@ -1,13 +1,10 @@
 import React from "react";
 
-function Footer () {
+const Footer = () => {
     return (
-        <div>
-            <p>
-            Developed By: <a href='https://github.com/abel-baker'>Seth Keating</a> | <a href='https://github.com/taystarr'>Taylor Roberts</a> | <a href='https://github.com/Rbenney15'>Robert Benney</a> | <a href='https://github.com/samdakota'>Sam Miller</a>
-            </p>
-            <p>© 2022 Copyright</p>
-        </div>
+        <footer className='w-100 mt-auto bg-secondary'>
+            <div className='container'> &copy;2022</div>
+        </footer>
     )
 }
 

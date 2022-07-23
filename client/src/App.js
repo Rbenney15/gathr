@@ -13,7 +13,11 @@ import Signup from "./components/signup";
 
 import Nav from "./components/navbar";
 import HomePage from "./components/homepage";
-import Footer from "./components/footer";
+import Signup from "./components/signup";
+import UserDash from "./components/dashboard";
+import CreateEvent from "./components/EventCreate";
+import Rsvp from "./components/Rsvp";
+import Footer from "./components/Footer";
 
 import UserDash from "./components/dashboard";
 import CreateEvent from "./components/EventCreate";
