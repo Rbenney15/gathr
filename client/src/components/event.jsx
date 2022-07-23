@@ -5,7 +5,7 @@ function Event () {
     return (
         <div>
             <h1>Event.name</h1>
-            <Link to=''>
+            <Link to='/event:id'>
                 <button>Update Event</button>
             </Link>
             <div>
