@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Rsvp () {
     return (
@@ -25,6 +26,9 @@ function Rsvp () {
                          Comment:
                     <textarea placeholder="Leave a comment" />
                     </label>
+                    <Link to='/event:id'>
+                    <button>RSVP</button>
+                    </Link>
                 </div>
             </form>
         </div>
