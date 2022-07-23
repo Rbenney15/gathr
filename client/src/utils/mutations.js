@@ -36,6 +36,7 @@ export const ADD_EVENT = gql`
         _id
         name
       }
+      createdAt    
     }
   }
 `;
