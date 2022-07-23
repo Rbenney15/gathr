@@ -48,13 +48,13 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/userdash" element={<UserDash />}>
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="dashboard" element={<UserDash />}>
                 <Route path="event" element={<Event />} />
                 <Route path=":eventId" element={<UserDash />} />
               </Route>
-              <Route path="/create-event" element={<CreateEvent />}>
+              <Route path="create-event" element={<CreateEvent />}>
                 <Route path=":id" element={<CreateEvent />} />
                 <Route path="rsvp" element={<Rsvp />} />
               </Route>

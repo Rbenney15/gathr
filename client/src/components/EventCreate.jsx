@@ -1,9 +1,19 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 function CreateEvent () {
+    if (!Auth.loggedIn()) {
+        return (
+          <h4>
+            You need to be logged in to see this. Use the navigation links above to
+            sign up or log in!
+          </h4>
+        );
+    }
     return (
         <div>
+            {/* <Redirect to={{pathname: "/login"}} /> */}
             <h2>Create a New Event</h2>
             <form>
                 <div>
@@ -41,5 +51,6 @@ function CreateEvent () {
         </div>
     )
 }
+
 
 export default CreateEvent;
