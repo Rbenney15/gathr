@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,14 +6,13 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "../src/components/Login";
 import Signup from "./components/signup";
-
 import Nav from "./components/navbar";
 import HomePage from "./components/homepage";
 import Footer from "./components/Footer";
-
 import UserDash from "./components/dashboard";
 import CreateEvent from "./components/EventCreate";
 import Event from "./components/event";
