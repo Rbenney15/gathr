@@ -7,6 +7,7 @@ const typeDefs = gql`
     email: String
     events: [Event]
     eventCount: Int
+    token: String
   }
 
   type Event {
@@ -20,6 +21,7 @@ const typeDefs = gql`
     attendees: [Attendee]
     attendeeCount: Int
     hasEverything: Boolean
+    token: String
   }
 
   type Item {
