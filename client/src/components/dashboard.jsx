@@ -6,8 +6,8 @@ import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from '../utils/queries';
 
 import Auth from '../utils/auth';
 // bootstrap components
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
 
 function UserDash () {
     const { username: userParam } = useParams();
