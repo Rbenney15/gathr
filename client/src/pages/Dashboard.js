@@ -1,13 +1,18 @@
 import React from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from "../utils/queries";
+import { useQuery } from "@apollo/client";
+import { QUERY_ME, QUERY_USER } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Table from 'react-bootstrap/Table';
+
 const Dashboard = (props) => {
-  const { username: userParam } = useParam();
+  const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
@@ -55,9 +60,7 @@ const Dashboard = (props) => {
             </tbody>
           </Table>
           <Link to="/create-event">
-            <button type="submit" className="btn btn-primary">
-              Create Event
-            </button>
+            <Button variant='primary'>Create Event</Button>
           </Link>
         </Card.Body>
       </Card>
