@@ -47,7 +47,7 @@ const Signup = () => {
       <Card.Body>
         <Card.Title>Sign Up</Card.Title>
         <Form>
-          <Form.Group classname='mb-3' onSubmit={handleFormSubmit}>
+          <Form.Group className='mb-3' onSubmit={handleFormSubmit}>
             <Form.Label>Username</Form.Label>
             <Form.Control onChange={handleChange} defaultValue={formState.username} type='text' placeholder='Username'></Form.Control>
           </Form.Group>

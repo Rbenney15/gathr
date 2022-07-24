@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useParams, Navigate } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from '../utils/queries';
@@ -10,16 +10,15 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 function UserDash () {
-    // const { username: userParam } = useParams();
+    const { username: userParam } = useParams();
 
   const { loading, data } = useQuery( QUERY_ME );
 
   const user = data?.me || {};
-
   // navigate to personal profile page if username is yours
-//   if (Auth.loggedIn() && Auth.getDashboard().data.username === userParam) {
-//     return <Navigate to="/dashboard:id" />;
-//   }
+  if (Auth.loggedIn() && Auth.getDashboard().data.username === userParam) {
+    return <Navigate to="/dashboard:id" />;
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -33,11 +32,12 @@ function UserDash () {
       </h4>
     );
   }
+  console.log(Auth.getDecoded());
     return (
         <div className="container d-flex justify-content-center">
             <div className="card col-10">
                 <div className="card-body">
-                    <h2 className="card-title">Welcome User!</h2>
+                    <h2 className="card-title">Welcome {user.username}!</h2>
                         <table class="table">
                             <thead>
                                 <tr>

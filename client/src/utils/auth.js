@@ -21,6 +21,9 @@ class AuthService {
       return false;
     }
   }
+  getDecoded() {
+    return decode(this.getToken());
+  }
 
   getToken() {
     // Retrieves the user token from localStorage
