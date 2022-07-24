@@ -15,9 +15,9 @@ const Dashboard = (props) => {
 
   const user = data?.me || data?.user || {};
 
-  // navigate to personal profile page if username is yours
+  // navigate to dashboard if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/profile:username" />;
+    return <Navigate to="/dashboard:username" />;
   }
 
   if (loading) {
@@ -32,5 +32,37 @@ const Dashboard = (props) => {
       </h4>
     );
   }
+
+  return (
+    <Container>
+      <Card>
+        <Card.Title>Welcome User</Card.Title>
+        <Card.Body>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Date and Time</th>
+                <th>Number of RSVPs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Event name</td>
+                <td>Event time</td>
+                <td>attendeeCount</td>
+              </tr>
+            </tbody>
+          </Table>
+          <Link to="/create-event">
+            <button type="submit" className="btn btn-primary">
+              Create Event
+            </button>
+          </Link>
+        </Card.Body>
+      </Card>
+    </Container>
+  );
+};
 
 export default Dashboard;
