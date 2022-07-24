@@ -17,6 +17,7 @@ function HomePage ({updatePage}) {
                     <Card.Text>
                         Have you always wanted to host a peanut party? Gathr is the place to be!
                     </Card.Text>
+                    <Button>Create an Event</Button>
                 </Card.Body>
             </Card>
         </Container>
