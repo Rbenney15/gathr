@@ -12,28 +12,7 @@ import { useMutation } from '@apollo/client';
 
 function CreateEvent() {
     const [formState, setFormState] = useState({ name: '', description: '', date: '', items: '' });
-    const [addEvent, { error }] = useMutation(ADD_EVENT, {
-        update(cache, {data: { addEvent } }) {
-            
-            try {
-                // update me array's cache
-                const { me } = cache.readQuery({ query: QUERY_ME });
-                cache.writeQuery({
-                    query: QUERY_ME,
-                    data: { me: { ...me, events: [...me.events, addEvent] } },
-                });
-            } catch (e) {
-                console.warn("First event!")
-            }
-
-            // update thought array's cache
-            const { events } = cache.readQuery({ query: QUERY_EVENT_DETAILS });
-            cache.writeQuery({
-                query: QUERY_EVENT_DETAILS,
-                data: { events: [addEvent, ...events] },
-            });
-        }
-    });
+    const [addEvent, { error }] = useMutation(ADD_EVENT);
 
   // update state based on form input changes
     const handleChange = (event) => {
