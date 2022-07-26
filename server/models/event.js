@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const itemSchema = require('./Item');
 const attendeeSchema = require('./Attendee');
 const dateFormat = require('../utils/dateFormat');
 
@@ -36,7 +35,12 @@ const eventSchema = new Schema(
       required: 'Your event must have a description, such as event location and theme!',
       maxlength: 480
     },
-    items: [itemSchema],
+    items: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Item'
+      }
+    ],
     attendees: [attendeeSchema]
   },
   {

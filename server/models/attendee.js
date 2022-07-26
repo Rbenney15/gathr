@@ -1,5 +1,4 @@
 const { Schema } = require('mongoose');
-const itemSchema = require('./Item');
 const dateFormat = require('../utils/dateFormat');
 
 const attendeeSchema = new Schema(
@@ -22,7 +21,12 @@ const attendeeSchema = new Schema(
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
-    items: [itemSchema]
+    items: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Item'
+      }
+    ]
   },
   {
     toJSON: {

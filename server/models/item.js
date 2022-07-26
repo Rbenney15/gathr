@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const attendeeSchema = require('./Attendee');
 
 const itemSchema = new Schema(
@@ -27,4 +27,6 @@ itemSchema.virtual('claimed').get(function() {
   return !(this.broughtBy === null || this.broughtBy === undefined);
 });
 
-module.exports = itemSchema;
+const Item = model('Item', itemSchema);
+
+module.exports = Item;

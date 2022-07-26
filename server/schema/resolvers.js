@@ -84,8 +84,25 @@ const resolvers = {
     },
     addEvent: async (parent, args, context) => {
       if (context.user) {
-        const event = await Event.create({ ...args, username: context.user.username });
+        // Retrieve csv from items field of form
+        const { items } = args;
         
+        // Separate into a [String]
+        const itemArray = items.split(",").map(element => element.trim());
+
+        // Transform each of those into Item with _id & name
+        //test progress: const newItems = itemArray.join("+");
+        const newItems = [];
+        for (let item of itemArray) {
+          // Create Item object
+          const newItem = await Item.create({ name: item });
+          newItems.push(newItem);
+        }
+
+        const event = await Event.create({ ...args,
+          host: context.user._id,
+          items: newItems });
+                  
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { events: event._id } },
