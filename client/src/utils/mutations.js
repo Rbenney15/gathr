@@ -35,19 +35,19 @@ export const ADD_EVENT = gql`
       items {
         _id
         name
-      }
-      createdAt    
+      }  
     }
   }
 `;
 
-export const SEND_RSVP = `
-  mutation sendRSVP($eventId: ID!, $nickname: String!, $items: String) {
-    sendRSVP(eventid: $eventId, nickname: $nickname, items: $items) {
+export const SEND_RSVP = gql`
+  mutation sendRSVP($eventId: ID!, $nickname: String!, $comment: String, $items: String) {
+    sendRSVP(eventid: $eventId, nickname: $nickname, comment: $comment, items: $items) {
       _id
       attendees {
         _id
         nickname
+        comment
         items {
           _id
           name
