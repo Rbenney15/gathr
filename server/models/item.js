@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const attendeeSchema = require('./Attendee');
 
 const itemSchema = new Schema(
   {
@@ -13,7 +12,10 @@ const itemSchema = new Schema(
       type: String,
       required: 'Item must have a name!'
     },
-    broughtBy: attendeeSchema,  
+    broughtBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'Attendee'
+    },  
   },
   {
     toJSON: {

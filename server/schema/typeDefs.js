@@ -35,6 +35,7 @@ const typeDefs = gql`
     _id: ID
     nickname: String
     respondedAt: String
+    comment: String
     items: [Item]
     bringingSomething: Boolean
   }
@@ -57,7 +58,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     addEvent(name: String!, date: String!, description: String!, items: String): Event
     addItem(eventId: ID!, name: String!): Event
-    sendRSVP(eventId: ID!, nickname: String!, items: String): Event
+    sendRSVP(eventId: ID!, nickname: String!, comment: String, items: String): Event
   }
 `;
 

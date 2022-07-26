@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const attendeeSchema = new Schema(
@@ -21,6 +21,9 @@ const attendeeSchema = new Schema(
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
+    comment: {
+      type: String,
+    },
     items: [
       {
         type: Schema.Types.ObjectId,
@@ -40,4 +43,6 @@ attendeeSchema.virtual('bringingSomething').get(function() {
   return this.items.length > 0;
 });
 
-module.exports = attendeeSchema;
+const Attendee = model('Attendee', attendeeSchema)
+
+module.exports = Attendee;
