@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Auth from '../utils/auth';
+// import { Link } from "react-router-dom";
+// import Auth from '../utils/auth';
 
 // bootstrap components
 import Button from 'react-bootstrap/Button';
@@ -17,7 +17,7 @@ function HomePage ({updatePage}) {
                     <Card.Text>
                         Have you always wanted to host a peanut party? Gathr is the place to be!
                     </Card.Text>
-                    <Button>Create an Event</Button>
+                    <Button type="submit">Create an Event</Button>
                 </Card.Body>
             </Card>
         </Container>

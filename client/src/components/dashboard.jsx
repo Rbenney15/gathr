@@ -6,6 +6,7 @@ import { QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
 // bootstrap components
+
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
