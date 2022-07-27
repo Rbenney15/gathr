@@ -54,7 +54,9 @@ function App() {
               <Route path="event" element={<Event />} >
                 <Route path=":id" element={<Event />} />
               </Route>
-                <Route path="rsvp" element={<Rsvp />} />
+              <Route path="rsvp" element={<Rsvp />} >
+                <Route path=":id" element={<Rsvp />} />
+              </Route>
               <Route path="create-event" element={<CreateEvent />}>
                 <Route path=":id" element={<CreateEvent />} />
               </Route>

@@ -1,12 +1,11 @@
 import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Auth from "../utils/auth";
-
 
 import { QUERY_EVENT_DETAILS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
@@ -33,8 +32,6 @@ function Event() {
         <Card.Body>
           <Card.Subtitle>WHEN</Card.Subtitle>
           <Card.Text>{event.date}</Card.Text>
-          <Card.Subtitle>WHERE</Card.Subtitle>
-          <Card.Text>{event.address}</Card.Text>
           <Card.Subtitle>WHAT</Card.Subtitle>
           <Card.Text>{event.description}</Card.Text>
           {Auth.loggedIn() ? (
@@ -43,7 +40,9 @@ function Event() {
               <Button>Delete</Button>
             </>
           ) : (
-            <Link to='/rsvp'>
+            <Link to={{
+              pathname: `/rsvp/${event._id}`,
+            }}>
               <Button>RSVP</Button>
             </Link>
           )}
