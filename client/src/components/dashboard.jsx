@@ -33,16 +33,17 @@ function UserDash() {
   const events = user.events;
 
   return (
-    <Container>
-      <Card>
-        <Card.Title>Welcome {user.username}</Card.Title>
+    <Container className='py-4'>
+      <Card bg='light'>
+        <Card.Header className='fs-3 text-center'>Welcome {user.username}!</Card.Header>
+        <Card.Text className='text-center mt-3' >Here are all of your upcoming events:</Card.Text>
         <Card.Body>
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Event</th>
                 <th>Date</th>
-                <th>Number of RSVPs</th>
+                <th className='text-center'>Number of RSVPs</th>
               </tr>
             </thead>
             <tbody>
@@ -66,7 +67,7 @@ function UserDash() {
                         </Link>
                       </td>
                       <td>{event.date}</td>
-                      <td>{event.attendeeCount}</td>
+                      <td className='text-center'>{event.attendeeCount}</td>
                     </tr>
                   ))}
                 </>
@@ -74,9 +75,14 @@ function UserDash() {
             </tbody>
           </Table>
           <Link to="/create-event">
-            <Button type="submit" className="btn btn-primary">
-              Create Event
-            </Button>
+            <div className='d-grid mx-auto'>
+              <Button
+                type="submit" 
+                className="btn btn-primary m-3"
+                size='small'>
+                Create New Event
+              </Button>
+              </div>
           </Link>
         </Card.Body>
       </Card>
