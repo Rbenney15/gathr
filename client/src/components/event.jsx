@@ -16,7 +16,7 @@ function Event() {
     variables: { _id: eventId },
   });
   const event = data?.event || {};
-
+  console.log(event);
   if (loading) {
     return <div>Loading...</div>;
   }
