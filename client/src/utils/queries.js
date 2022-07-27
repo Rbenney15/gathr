@@ -51,6 +51,7 @@ export const QUERY_EVENT_DETAILS = gql`
       }
       attendees {
         _id
+        eventId
         nickname
         comment
         items {

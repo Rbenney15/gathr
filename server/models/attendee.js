@@ -5,11 +5,15 @@ const attendeeSchema = new Schema(
   {
     // type Attendee {
     //   _id: ID
+    //   eventId: String
     //   nickname: String
     //   respondedAt: String
     //   items: [Item]
     //   (v) bringingSomething: Boolean
     // }
+    eventId: {
+      type: String
+    },
     nickname: {
       type: String,
       required: 'Let the host know who you are!',

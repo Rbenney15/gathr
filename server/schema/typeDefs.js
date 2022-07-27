@@ -34,6 +34,7 @@ const typeDefs = gql`
 
   type Attendee {
     _id: ID
+    eventId: String
     nickname: String
     respondedAt: String
     comment: String
@@ -60,6 +61,8 @@ const typeDefs = gql`
     addEvent(name: String!, date: String!, description: String!, items: String): Event
     addItem(eventId: ID!, name: String!): Event
     sendRSVP(eventId: ID!, nickname: String!, comment: String, items: String): Event
+    deleteEvent(_id: ID!): Boolean
+    updateEvent(_id: ID!, name: String, date: String, description: String, items: String): Event
   }
 `;
 
