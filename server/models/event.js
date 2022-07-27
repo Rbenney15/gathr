@@ -1,6 +1,4 @@
 const { Schema, model } = require('mongoose');
-const itemSchema = require('./Item');
-const attendeeSchema = require('./Attendee');
 const dateFormat = require('../utils/dateFormat');
 
 const eventSchema = new Schema(
@@ -36,8 +34,18 @@ const eventSchema = new Schema(
       required: 'Your event must have a description, such as event location and theme!',
       maxlength: 480
     },
-    items: [itemSchema],
-    attendees: [attendeeSchema]
+    items: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Item'
+      }
+    ],
+    attendees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Attendee'
+      }
+    ]
   },
   {
     toJSON: {
@@ -55,9 +63,6 @@ eventSchema.virtual('attendeeCount').get(function() {
 eventSchema.virtual('hasEverything').get(function() {
   // if foreach item claimed is true, return true
 });
-
-
-
 
 
 const Event = model('Event', eventSchema);

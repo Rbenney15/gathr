@@ -12,7 +12,7 @@ const resolvers = {
     //   event(_id: ID!): Event
     // }
 
-    me: async () => {
+    me: 
       async (parent, args, context) => {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
@@ -23,8 +23,7 @@ const resolvers = {
         }
   
         throw new AuthenticationError('Not logged in');
-      }
-    },
+      },
     users: async () => {
       return User.find()
         .select('-__v -password')
@@ -84,8 +83,24 @@ const resolvers = {
     },
     addEvent: async (parent, args, context) => {
       if (context.user) {
-        const event = await Event.create({ ...args, username: context.user.username });
+        // Retrieve csv from items field of form
+        const { items } = args;
         
+        // Separate into a [String]
+        const itemArray = items.split(",").map(element => element.trim());
+
+        // Transform each of those into Item with _id & name
+        const newItems = [];
+        for (let item of itemArray) {
+          // Create Item object
+          const newItem = await Item.create({ name: item });
+          newItems.push(newItem);
+        }
+
+        const event = await Event.create({ ...args,
+          host: context.user._id,
+          items: newItems });
+                  
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { events: event._id } },
@@ -97,42 +112,40 @@ const resolvers = {
 
       throw new AuthenticationError('You must be logged in to create an event');
     },
-    // addItem: async (parent, { eventId, itemName }, context) => {
-    //   if (context.user) 
-    //   {
-    //     const updatedEvent = await Event.findOneAndUpdate(
-    //       { _id: eventId },
-    //       { $push: { items: { name: itemName } } },
-    //       { new: true, runValidators: true }
-    //     );
+    sendRSVP: async (parent, { eventId, nickname, comment, items }) => {
+      // prepare items:
+      const itemStrings = [];
+      // assume incoming items parameter is a csv string
+      if (items && items.length > 0)
+        itemStrings.push(items.split());
+      
+      const updatedItems = [];
+      // for each
+      for (let itemString of itemStrings) {
+        const item = await Item.findOne({ name: itemString });
 
-    //     return updatedEvent;
-    //   }
-
-    //   throw new AuthenticationError('You must be logged in to assign an item to an event');
-    // },
-    sendRSVP: async (parent, { eventId, attendeeNickname, itemString }) => {
-      // if invite authentication passes
-      {
-        const updatedEvent = await Event.findOneAndUpdate(
-          { _id: eventId },
-          { $push: { attendees: { nickname: attendeeNickname, attending } } },
-          { new: true, runValidators: true }
-        );
-
-        return updatedEvent;
+        updatedItems.push(item);
+      }
+      
+      // create a new Attendee
+      const newAttendee = await Attendee.create({ 
+        nickname: nickname, comment: comment,
+        items: updatedItems });
+        
+      // Update Item broughtBy field with new Attendee's _id
+      for (let item of updatedItems) {
+        item.set({ broughtBy: newAttendee._id });
       }
 
-      // throw new AuthenticationError('You must be logged in to rsvp an attendee to an event');
-    },
-    // claimItem: async (parent, { eventId, itemId, attendeeId }) => {
-    //   // if invite authentication passes
-    //   {
-    //     const updatedEvent = await Event.findOneAndUpdate(
-    //       { _id: eventId },
-    //     )
-    //   }
-    // }
+      // push new Attendee to Event's attendees
+      const updatedEvent = await Event.findOneAndUpdate(
+        { _id: eventId }, // eventId from form submission
+        { $push: { attendees: newAttendee } }, // <-- change this
+        { new: true, runValidators: true }
+      );
+
+      return updatedEvent;
+    }
   }
   
 };
