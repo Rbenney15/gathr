@@ -1,19 +1,20 @@
 import React from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { useQuery } from '@apollo/client';
-import { QUERY_ME, QUERY_EVENTS_DASHBOARD } from '../utils/queries';
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
 
-import Auth from '../utils/auth';
+import Auth from "../utils/auth";
 // bootstrap components
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Table from "react-bootstrap/Table";
 
-function UserDash () {
-
+function UserDash() {
   const { loading, data, error } = useQuery(QUERY_ME);
   const user = data?.me || {};
-  
+
   console.log(user);
 
   if (loading) {
@@ -28,34 +29,58 @@ function UserDash () {
       </h4>
     );
   }
-    return (
-        <div className="container d-flex justify-content-center">
-            <div className="card col-10">
-                <div className="card-body">
-                    <h2 className="card-title">Welcome {user.username}!</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Event</th>
-                                    <th scope="col">Date and Time</th>
-                                    <th scope="col">Number of RSVPs</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Event name</td>
-                                    <td>Event time</td>
-                                    <td>attendeeCount</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                            <Link to='/create-event'>
-                                <button type="submit" className="btn btn-primary">Create Event</button>
-                            </Link>
-                </div>
-            </div>
-        </div>
-    )
+  const events = user.events;
+
+  return (
+    <Container>
+      <Card>
+        <Card.Title>Welcome {user.username}</Card.Title>
+        <Card.Body>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Number of RSVPs</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.length === 0 ? (
+                <>
+                  <tr>
+                    <td colSpan='3'>No Events Created Yet</td>
+                  </tr>
+                </>
+              ) : (
+                <>
+                  {events.map((event) => (
+                    <tr>
+                      <td>
+                        <Link
+                          to={{
+                            pathname: `/event/${event._id}`,
+                          }}
+                        >
+                          {event.name}
+                        </Link>
+                      </td>
+                      <td>{event.date}</td>
+                      <td>{event.attendeeCount}</td>
+                    </tr>
+                  ))}
+                </>
+              )}
+            </tbody>
+          </Table>
+          <Link to="/create-event">
+            <Button type="submit" className="btn btn-primary">
+              Create Event
+            </Button>
+          </Link>
+        </Card.Body>
+      </Card>
+    </Container>
+  );
 }
 
 export default UserDash;
