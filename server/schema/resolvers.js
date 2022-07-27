@@ -12,7 +12,7 @@ const resolvers = {
     //   event(_id: ID!): Event
     // }
 
-    me: async () => {
+    me: 
       async (parent, args, context) => {
         if (context.user) {
           const userData = await User.findOne({ _id: context.user._id })
@@ -23,8 +23,7 @@ const resolvers = {
         }
   
         throw new AuthenticationError('Not logged in');
-      }
-    },
+      },
     users: async () => {
       return User.find()
         .select('-__v -password')
