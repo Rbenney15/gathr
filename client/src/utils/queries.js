@@ -43,11 +43,11 @@ export const QUERY_EVENT_DETAILS = gql`
       name
       date
       description
-      # items {
-      #   _id
-      #   name
-      #   broughtBy
-      # }
+      items {
+       _id
+       name
+       broughtBy
+      }
       attendees {
         _id
         nickname

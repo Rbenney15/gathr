@@ -51,8 +51,8 @@ function Event() {
             <>
               <Card.Subtitle>Things We Need for the Party</Card.Subtitle>
               <ListGroup>
-                {event.items.map((items) => (
-                  <ListGroup.Item>{event.items}</ListGroup.Item>
+                {event.items.map((item) => (
+                  <ListGroup.Item>{item.name}</ListGroup.Item>
                 ))}
               </ListGroup>
             </>
@@ -61,8 +61,8 @@ function Event() {
             <>
               <Card.Subtitle>WHO'S COMING</Card.Subtitle>
               <ListGroup>
-                {event.attendees.map((attendees) => (
-                  <ListGroup.Item>{event.attendees}</ListGroup.Item>
+                {event.attendees.map((attendee) => (
+                  <ListGroup.Item>{attendee.nickname}</ListGroup.Item>
                 ))}
               </ListGroup>
             </>
