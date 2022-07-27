@@ -12,23 +12,24 @@ import { SEND_RSVP } from "../utils/mutations";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 
 function Rsvp() {
+  const { id: eventId } = useParams();
+  const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
+    variables: { id: eventId },
+  });
+  const [sendRsvp, { error }] = useMutation(SEND_RSVP);
+  const navigate = useNavigate();
+  const event = data?.event || {};
+  console.log(event);
+
   const [formState, setFormState] = useState({
     nickname: "",
     comment: "",
     items: "",
   }); 
-  const [sendRsvp, { error }] = useMutation(SEND_RSVP);
-  const navigate = useNavigate();
-  const { id: eventId } = useParams();
-  const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
-    variables: { id: eventId },
-  });
-  const event = data?.event || {};
-  console.log(event);
 
   // update state based on form input changes
-  const handleChange = (rsvp) => {
-    const { name, value } = rsvp.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
     setFormState({
       ...formState,
@@ -37,8 +38,8 @@ function Rsvp() {
   };
 
   // submit form
-  const handleFormSubmit = async (rsvp) => {
-    rsvp.preventDefault();
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
     try {
       const { data } = await sendRsvp({
@@ -64,6 +65,9 @@ function Rsvp() {
             <Form.Control
               type="text"
               placeholder="Name that the host will see"
+              name="nickname"
+              id="nickname"
+              value={formState.nickname}
               onChange={handleChange}
             ></Form.Control>
           </Form.Group>
@@ -73,6 +77,9 @@ function Rsvp() {
               as="textarea"
               placeholder="Leave a comment for the host"
               rows="3"
+              name="comment"
+              id="comment"
+              value={formState.comment}
               onChange={handleChange}
             ></Form.Control>
           </Form.Group>
