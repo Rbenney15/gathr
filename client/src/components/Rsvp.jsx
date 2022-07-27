@@ -25,6 +25,7 @@ function Rsvp () {
                             <Form.Check type={type} id={`${type}`} label={`${type}`} />
                         </div>
                     ))}
+                    <Button type="submit" className="mb-3">Submit</Button>
                 </Form>
             </Card.Body>
         </Card>

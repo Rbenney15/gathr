@@ -57,7 +57,7 @@ const LoginForm = (props) => {
             <Form.Label>Password</Form.Label>
             <Form.Control onChange={handleChange} defaultValue={formState.password} type='password' placeholder='Password'></Form.Control>
           </Form.Group>
-          <Button variant='primary' type="submit">Login</Button>
+          <Button className='pull-right' variant='primary' type="submit">Login</Button>
         </Form>
         <Card.Text>
           Don't have a login? Sign up here

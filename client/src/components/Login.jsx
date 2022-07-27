@@ -2,6 +2,11 @@ import React, { useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 import Auth from '../utils/auth';
 // import { useNavigate } from 'react-router-dom';
 
@@ -45,7 +50,42 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <Container>
+      <Card bg='light' className='mt-4 w-75 mx-auto'>
+        <Card.Title className='fs-3 text-center mt-3'>Login</Card.Title>
+        <Form onSubmit={handleFormSubmit} className='mx-3'>
+            <Form.Group controlId='login' className='mx-3'>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Your email'
+                value={formState.email}
+                onChange={handleChange}
+                />
+            </Form.Group>
+            <Form.Group controlId='password' className='mx-3'>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                type='password'
+                name='password'
+                id='password'
+                placeholder='********'
+                value={formState.password}
+                onChange={handleChange}
+                />
+            </Form.Group>
+
+            <Button type='submit' className='btn btn-primary m-3 float-end'>Login</Button>
+
+        </Form>
+      </Card>
+    </Container>
+  );
+};
+
+    /* <main className="flex-row justify-center mb-4">
       <div className="col-12 col-md-6">
         <div className="card">
           <h4 className="card-header">Login</h4>
@@ -78,8 +118,6 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </main>
-  );
-};
+    </main> */
 
 export default Login;
