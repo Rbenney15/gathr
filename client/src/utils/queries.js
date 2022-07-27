@@ -47,6 +47,7 @@ export const QUERY_EVENT_DETAILS = gql`
        _id
        name
        broughtBy
+       claimed
       }
       attendees {
         _id
@@ -55,6 +56,8 @@ export const QUERY_EVENT_DETAILS = gql`
         items {
           _id
           name
+          broughtBy
+          claimed
         }
       }
     }

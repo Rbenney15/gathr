@@ -11,7 +11,6 @@ const resolvers = {
     //   events(username: String): [Event]
     //   event(_id: ID!): Event
     // }
-
     me: 
       async (parent, args, context) => {
         if (context.user) {
@@ -42,11 +41,17 @@ const resolvers = {
         .populate('attendees');
     },
     event: async (parent, { _id }) => {
+      const projection = { name: 1, broughtBy: 1 }
       return Event.findOne({ _id })
         .populate('items')
-        .populate('attendees');
+        .populate({
+          path: 'attendees',
+          populate: {
+            path: 'items',
+            model: 'Item'
+          }
+        });
     }
-    // ...
   },
   
 
@@ -55,9 +60,7 @@ const resolvers = {
     //   login(email: String!, password: String!): Auth
     //   addUser(username: String!, email: String!, password: String!): Auth
     //   addEvent(name: String!, date: String!, description: String!): Event
-    //   addItem(eventId: ID!, name: String!): Event
-    //   addAttendee(eventId: ID!, nickname: String!, attending: Boolean!): Event
-    //   claimItem(eventId: ID!, itemId: ID!, attendeeId: ID!): Event
+    //   sendRSVP(eventId: ID!, nickname: String!, comment: String, items: String): Event
     // }
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -83,6 +86,11 @@ const resolvers = {
     },
     addEvent: async (parent, args, context) => {
       if (context.user) {
+        // Create Event object
+        const event = await Event.create({ ...args,
+          host: context.user._id,
+          items: [] });
+
         // Retrieve csv from items field of form
         const { items } = args;
         
@@ -90,17 +98,18 @@ const resolvers = {
         const itemArray = items.split(",").map(element => element.trim());
 
         // Transform each of those into Item with _id & name
-        const newItems = [];
         for (let item of itemArray) {
           // Create Item object
-          const newItem = await Item.create({ name: item });
-          newItems.push(newItem);
+          const newItem = await Item.create({ 
+            name: item,
+            eventId: event._id
+          });
+          event.items.push(newItem);
         }
 
-        const event = await Event.create({ ...args,
-          host: context.user._id,
-          items: newItems });
-                  
+        await event.save();
+
+        // Push new Event to logged-in User's list of events
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { events: event._id } },
@@ -113,28 +122,31 @@ const resolvers = {
       throw new AuthenticationError('You must be logged in to create an event');
     },
     sendRSVP: async (parent, { eventId, nickname, comment, items }) => {
-      // prepare items:
-      const itemStrings = [];
-      // assume incoming items parameter is a csv string
-      if (items && items.length > 0)
-        itemStrings.push(items.split());
-      
-      const updatedItems = [];
-      // for each
-      for (let itemString of itemStrings) {
-        const item = await Item.findOne({ name: itemString });
-
-        updatedItems.push(item);
-      }
-      
       // create a new Attendee
       const newAttendee = await Attendee.create({ 
         nickname: nickname, comment: comment,
-        items: updatedItems });
+        items: [] });
         
-      // Update Item broughtBy field with new Attendee's _id
-      for (let item of updatedItems) {
-        item.set({ broughtBy: newAttendee._id });
+
+      if (items) {
+        // Retrieve csv from items field of form and split:
+        const itemArray = items.split(",").map(element => element.trim());
+        
+        // Update Item's broughtBy field and add to new Attendee's items
+        for (let itemString of itemArray) {
+          const item = await Item.findOne({ eventId, name: itemString });
+          if (!item) continue;
+
+          // Update Item's broughtBy
+          item.broughtBy = newAttendee._id;
+          await item.save();
+          
+          // Add to Attendee's items
+          newAttendee.items.push(item);
+          // Future: only push if the item is not present (i.e. don't push duplicates)
+        }
+
+        await newAttendee.save();
       }
 
       // push new Attendee to Event's attendees
