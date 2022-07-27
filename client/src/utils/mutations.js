@@ -56,3 +56,9 @@ export const SEND_RSVP = gql`
     }
   }
 `;
+
+export const DELETE_EVENT = gql`
+  mutation deleteEvent($id: ID!) {
+    deleteEvent(_id: $id)
+  }
+`;
