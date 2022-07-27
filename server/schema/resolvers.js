@@ -168,6 +168,24 @@ const resolvers = {
         await Attendee.deleteMany({ eventId: _id });
         await Item.deleteMany({ eventId: _id });
       }
+    },
+    updateEvent: async (parent, {_id, name, date, description}, context) => {
+      if (context.user) {
+        let updateQuery = {};
+
+        if (name) updateQuery = { ...updateQuery, name };
+        if (date) updateQuery = { ...updateQuery, date };
+        if (description) updateQuery = { ...updateQuery, description };
+
+        const updatedEvent = await Event.findByIdAndUpdate(
+          _id,
+          { $set: updateQuery },
+          { new: true });
+
+        return updatedEvent;
+      }
+
+      throw new AuthenticationError('You must be logged in to edit an event');
     }
   }
   
