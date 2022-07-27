@@ -16,8 +16,6 @@ function UserDash() {
   const { loading, data, error } = useQuery(QUERY_ME);
   const user = data?.me || {};
 
-  console.log(user);
-
   if (loading) {
     return <div>Loading...</div>;
   }

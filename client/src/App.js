@@ -50,9 +50,9 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
-              <Route path="dashboard" element={<UserDash />}>
-                <Route path="event" element={<Event />} />
-                <Route path=":eventId" element={<UserDash />} />
+              <Route path="dashboard" element={<UserDash />} />
+              <Route path="event" element={<Event />} >
+                <Route path=":id" element={<Event />} />
               </Route>
               <Route path="create-event" element={<CreateEvent />}>
                 <Route path=":id" element={<CreateEvent />} />
@@ -66,28 +66,5 @@ function App() {
     </ApolloProvider>
   );
 }
-
-// function App() {
-//   return (
-//     <ApolloProvider client={client}>
-//       <Router>
-//         <Nav></Nav>
-//         <Routes>
-//           <Route path="/" element={<HomePage />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/signup" element={<Signup />} />
-//           <Route path="/create-event" element={<CreateEvent />} />
-//         </Routes>
-//         <Footer />
-//         <div>
-//         <Rsvp />
-//         </div>
-//         <div>
-//         <UserDash />
-//         </div>
-//       </Router>
-//     </ApolloProvider>
-//   );
-// }
 
 export default App;
