@@ -169,8 +169,9 @@ const resolvers = {
         await Item.deleteMany({ eventId: _id });
       }
     },
-    updateEvent: async (parent, {_id, name, date, description}, context) => {
+    updateEvent: async (parent, { _id, name, date, description, items }, context) => {
       if (context.user) {
+        // Update name, date, description if supplied
         let updateQuery = {};
 
         if (name) updateQuery = { ...updateQuery, name };
@@ -181,6 +182,22 @@ const resolvers = {
           _id,
           { $set: updateQuery },
           { new: true });
+
+        // Add additional items if supplied
+        if (items) {
+          const itemArray = items.split(",").map(element => element.trim());
+
+          for (let item of itemArray) {
+            // Create Item object
+            const newItem = await Item.create({
+              name: item,
+              eventId: _id
+            });
+            updatedEvent.items.push(newItem);
+          }
+
+          await updatedEvent.save();
+        }
 
         return updatedEvent;
       }
