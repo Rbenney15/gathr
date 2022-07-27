@@ -13,10 +13,10 @@ import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 
 function UserDash() {
+  // window.location.reload();
+
   const { loading, data, error } = useQuery(QUERY_ME);
   const user = data?.me || {};
-
-  console.log(user);
 
   if (loading) {
     return <div>Loading...</div>;

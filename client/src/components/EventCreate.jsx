@@ -14,7 +14,6 @@ function CreateEvent() {
     const [addEvent, { error }] = useMutation(ADD_EVENT);
     const navigate = useNavigate();
 
-
     // update state based on form input changes
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -108,7 +107,7 @@ function CreateEvent() {
                 value={formState.items}
                 onChange={handleChange}/>
             </div>
-            <button type='submit'>Create Event</button>   
+            <button type='submit' >Create Event</button>   
         </form>
     </div>
 )
