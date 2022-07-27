@@ -54,9 +54,7 @@ const resolvers = {
     //   login(email: String!, password: String!): Auth
     //   addUser(username: String!, email: String!, password: String!): Auth
     //   addEvent(name: String!, date: String!, description: String!): Event
-    //   addItem(eventId: ID!, name: String!): Event
-    //   addAttendee(eventId: ID!, nickname: String!, attending: Boolean!): Event
-    //   claimItem(eventId: ID!, itemId: ID!, attendeeId: ID!): Event
+    //   sendRSVP(eventId: ID!, nickname: String!, comment: String, items: String): Event
     // }
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -100,7 +98,6 @@ const resolvers = {
             name: item,
             eventId: event._id
           });
-          console.log(newItem);
           event.items.push(newItem);
         }
 
@@ -119,28 +116,31 @@ const resolvers = {
       throw new AuthenticationError('You must be logged in to create an event');
     },
     sendRSVP: async (parent, { eventId, nickname, comment, items }) => {
-      // prepare items:
-      const itemStrings = [];
-      // assume incoming items parameter is a csv string
-      if (items && items.length > 0)
-        itemStrings.push(items.split());
-      
-      const updatedItems = [];
-      // for each
-      for (let itemString of itemStrings) {
-        const item = await Item.findOne({ name: itemString });
-
-        updatedItems.push(item);
-      }
-      
       // create a new Attendee
       const newAttendee = await Attendee.create({ 
         nickname: nickname, comment: comment,
-        items: updatedItems });
+        items: [] });
         
-      // Update Item broughtBy field with new Attendee's _id
-      for (let item of updatedItems) {
-        item.set({ broughtBy: newAttendee._id });
+
+      if (items) {
+        // Retrieve csv from items field of form and split:
+        const itemArray = items.split(",").map(element => element.trim());
+        
+        // Update Item's broughtBy field and add to new Attendee's items
+        for (let itemString of itemArray) {
+          const item = await Item.findOne({ eventId, name: itemString });
+          if (!item) continue;
+
+          // Update Item's broughtBy
+          item.broughtBy = newAttendee._id;
+          item.save();
+          
+          // Add to Attendee's items
+          newAttendee.items.push(item);
+          // Future: only push if the item is not present (i.e. don't push duplicates)
+        }
+
+        await newAttendee.save();
       }
 
       // push new Attendee to Event's attendees

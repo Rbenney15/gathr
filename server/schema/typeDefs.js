@@ -28,7 +28,7 @@ const typeDefs = gql`
     _id: ID
     eventId: ID
     name: String
-    broughtBy: String
+    broughtBy: ID
     claimed: Boolean
   }
 
