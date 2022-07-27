@@ -41,11 +41,17 @@ const resolvers = {
         .populate('attendees');
     },
     event: async (parent, { _id }) => {
+      const projection = { name: 1, broughtBy: 1 }
       return Event.findOne({ _id })
         .populate('items')
-        .populate('attendees');
+        .populate({
+          path: 'attendees',
+          populate: {
+            path: 'items',
+            model: 'Item'
+          }
+        });
     }
-    // ...
   },
   
 
@@ -133,7 +139,7 @@ const resolvers = {
 
           // Update Item's broughtBy
           item.broughtBy = newAttendee._id;
-          item.save();
+          await item.save();
           
           // Add to Attendee's items
           newAttendee.items.push(item);
