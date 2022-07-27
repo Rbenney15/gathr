@@ -41,7 +41,6 @@ const resolvers = {
         .populate('attendees');
     },
     event: async (parent, { _id }) => {
-      const projection = { name: 1, broughtBy: 1 }
       return Event.findOne({ _id })
         .populate('items')
         .populate({
@@ -125,6 +124,7 @@ const resolvers = {
       // create a new Attendee
       const newAttendee = await Attendee.create({ 
         nickname: nickname, comment: comment,
+        eventId: eventId,
         items: [] });
         
 
@@ -157,6 +157,52 @@ const resolvers = {
       );
 
       return updatedEvent;
+    },
+    deleteEvent: async (parent, { _id }, context) => {
+      // Logged-in User only <-- then add authentication for User == host
+      if (context.user) {
+        // Find Event and delete
+        await Event.findByIdAndDelete(_id);
+
+        // Remove Attendees & Items
+        await Attendee.deleteMany({ eventId: _id });
+        await Item.deleteMany({ eventId: _id });
+      }
+    },
+    updateEvent: async (parent, { _id, name, date, description, items }, context) => {
+      if (context.user) {
+        // Update name, date, description if supplied
+        let updateQuery = {};
+
+        if (name) updateQuery = { ...updateQuery, name };
+        if (date) updateQuery = { ...updateQuery, date };
+        if (description) updateQuery = { ...updateQuery, description };
+
+        const updatedEvent = await Event.findByIdAndUpdate(
+          _id,
+          { $set: updateQuery },
+          { new: true });
+
+        // Add additional items if supplied
+        if (items) {
+          const itemArray = items.split(",").map(element => element.trim());
+
+          for (let item of itemArray) {
+            // Create Item object
+            const newItem = await Item.create({
+              name: item,
+              eventId: _id
+            });
+            updatedEvent.items.push(newItem);
+          }
+
+          await updatedEvent.save();
+        }
+
+        return updatedEvent;
+      }
+
+      throw new AuthenticationError('You must be logged in to edit an event');
     }
   }
   
