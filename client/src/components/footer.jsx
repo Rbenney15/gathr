@@ -1,11 +1,16 @@
 import React from "react";
 
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+
 const Footer = () => {
     return (
-        <footer className='w-100 mt-auto bg-secondary'>
-            <div className='container'> &copy;2022</div>
-        </footer>
-    )
-}
+        <Container>
+            <Card className='w-100 fixed-bottom mt-auto bg-light'>
+                <Card.Text>&copy; 2022</Card.Text>
+            </Card>
+        </Container>
+    );
+};
 
 export default Footer;

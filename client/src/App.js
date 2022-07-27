@@ -11,7 +11,7 @@ import { setContext } from "@apollo/client/link/context";
 import Login from "../src/components/Login";
 import Signup from "./components/signup";
 
-import Nav from "./components/navbar";
+import Header from "./components/navbar";
 import HomePage from "./components/homepage";
 import Footer from "./components/Footer";
 
@@ -44,7 +44,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
-          <Nav />
+          <Header />
           <div className="container">
             <Routes>
               <Route path="/" element={<HomePage />} />
