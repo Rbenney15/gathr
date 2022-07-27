@@ -12,6 +12,9 @@ const itemSchema = new Schema(
       type: String,
       required: 'Item must have a name!'
     },
+    eventId: {
+      type: String
+    },
     broughtBy: {
       type: Schema.Types.ObjectId,
       ref: 'Attendee'

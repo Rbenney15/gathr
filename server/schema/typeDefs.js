@@ -26,6 +26,7 @@ const typeDefs = gql`
 
   type Item {
     _id: ID
+    eventId: ID
     name: String
     broughtBy: String
     claimed: Boolean

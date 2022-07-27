@@ -11,7 +11,6 @@ const resolvers = {
     //   events(username: String): [Event]
     //   event(_id: ID!): Event
     // }
-
     me: 
       async (parent, args, context) => {
         if (context.user) {
@@ -83,6 +82,11 @@ const resolvers = {
     },
     addEvent: async (parent, args, context) => {
       if (context.user) {
+        // Create Event object
+        const event = await Event.create({ ...args,
+          host: context.user._id,
+          items: [] });
+
         // Retrieve csv from items field of form
         const { items } = args;
         
@@ -90,17 +94,19 @@ const resolvers = {
         const itemArray = items.split(",").map(element => element.trim());
 
         // Transform each of those into Item with _id & name
-        const newItems = [];
         for (let item of itemArray) {
           // Create Item object
-          const newItem = await Item.create({ name: item });
-          newItems.push(newItem);
+          const newItem = await Item.create({ 
+            name: item,
+            eventId: event._id
+          });
+          console.log(newItem);
+          event.items.push(newItem);
         }
 
-        const event = await Event.create({ ...args,
-          host: context.user._id,
-          items: newItems });
-                  
+        await event.save();
+
+        // Push new Event to logged-in User's list of events
         await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { events: event._id } },
