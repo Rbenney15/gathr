@@ -34,6 +34,7 @@ const typeDefs = gql`
 
   type Attendee {
     _id: ID
+    eventId: String
     nickname: String
     respondedAt: String
     comment: String

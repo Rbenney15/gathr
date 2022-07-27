@@ -41,7 +41,6 @@ const resolvers = {
         .populate('attendees');
     },
     event: async (parent, { _id }) => {
-      const projection = { name: 1, broughtBy: 1 }
       return Event.findOne({ _id })
         .populate('items')
         .populate({
@@ -125,6 +124,7 @@ const resolvers = {
       // create a new Attendee
       const newAttendee = await Attendee.create({ 
         nickname: nickname, comment: comment,
+        eventId: eventId,
         items: [] });
         
 
@@ -158,22 +158,15 @@ const resolvers = {
 
       return updatedEvent;
     },
-    deleteEvent: async (parent, { eventId }, context) => {
+    deleteEvent: async (parent, { _id }, context) => {
       // Logged-in User only <-- then add authentication for User == host
       if (context.user) {
         // Find Event and delete
-        const {err, deletedEvent} = await Event.findByIdAndDelete(eventId);
-
-        if (err) {
-          console.err(err);
-          return false;
-        }
+        await Event.findByIdAndDelete(_id);
 
         // Remove Attendees & Items
-        await Attendee.deleteMany({ eventId });
-        await Item.deleteMany({ eventId });
-
-        return true;
+        await Attendee.deleteMany({ eventId: _id });
+        await Item.deleteMany({ eventId: _id });
       }
     }
   }
