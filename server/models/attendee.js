@@ -1,5 +1,4 @@
-const { Schema } = require('mongoose');
-const itemSchema = require('./Item');
+const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const attendeeSchema = new Schema(
@@ -8,7 +7,6 @@ const attendeeSchema = new Schema(
     //   _id: ID
     //   nickname: String
     //   respondedAt: String
-    //   attending: Boolean
     //   items: [Item]
     //   (v) bringingSomething: Boolean
     // }
@@ -23,10 +21,15 @@ const attendeeSchema = new Schema(
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
-    attending: {
-      type: Boolean
+    comment: {
+      type: String,
     },
-    items: [itemSchema]
+    items: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Item'
+      }
+    ]
   },
   {
     toJSON: {
@@ -40,4 +43,6 @@ attendeeSchema.virtual('bringingSomething').get(function() {
   return this.items.length > 0;
 });
 
-module.exports = attendeeSchema;
+const Attendee = model('Attendee', attendeeSchema)
+
+module.exports = Attendee;

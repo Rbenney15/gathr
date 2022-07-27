@@ -59,11 +59,11 @@ const LoginForm = (props) => {
         <Form>
           <Form.Group classname='mb-3' onSubmit={handleFormSubmit}>
             <Form.Label>Username</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.username} type='username' placeholder='Username'></Form.Control>
+            <Form.Control onChange={handleChange} defaultValue={formState.username} type='username' placeholder='Username'></Form.Control>
           </Form.Group>
           <Form.Group className='mb-3' onSubmit={handleFormSubmit}>
             <Form.Label>Password</Form.Label>
-            <Form.Control onChange={handleChange} value={formState.password} type='password' placeholder='Password'></Form.Control>
+            <Form.Control onChange={handleChange} defaultValue={formState.password} type='password' placeholder='Password'></Form.Control>
           </Form.Group>
           <Button variant='primary' type="submit">Login</Button>
         </Form>

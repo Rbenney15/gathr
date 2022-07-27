@@ -1,7 +1,7 @@
 import decode from 'jwt-decode';
 
 class AuthService {
-  getProfile() {
+  getDashboard() {
     return decode(this.getToken());
   }
 
@@ -20,6 +20,9 @@ class AuthService {
     } catch (err) {
       return false;
     }
+  }
+  getDecoded() {
+    return decode(this.getToken());
   }
 
   getToken() {
