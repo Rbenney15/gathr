@@ -12,24 +12,12 @@ import copy from 'copy-to-clipboard';
 import Auth from "../utils/auth";
 
 import { QUERY_EVENT_DETAILS } from "../utils/queries";
-import { useQuery } from "@apollo/client";
+import { DELETE_EVENT } from "../utils/mutations";
+import { useQuery, useMutation } from "@apollo/client";
 
 function Event() {
+  // COPY BUTTON
   const [copied, setCopied] = useState(false);
-
-  const { id: eventId } = useParams();
-
-  const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
-    variables: { id: eventId },
-  });
-  const event = data?.event || {};
-  console.log(event);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  const items = event.items;
-  const attendees = event.attendees;
 
   function copy() {
     const el = document.createElement('input');
@@ -39,6 +27,48 @@ function Event() {
     document.execCommand('copy');
     document.body.removeChild(el);
     setCopied(true);
+  }
+
+  // QUERY EVENT
+  const { id: eventId } = useParams();
+  const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
+    variables: { id: eventId },
+  });
+
+  const event = data?.event || {};
+  console.log(event);
+
+  const items = event.items;
+  const attendees = event.attendees;
+
+  // MUTATION DELETE EVENT
+  const [deleteEvent, { error }] = useMutation(DELETE_EVENT);
+  const navigate = useNavigate();
+
+  const handleDeleteButton = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await deleteEvent({
+        variables: { eventId }
+      });
+
+      console.log(data.deleteEvent);
+
+      if (data.deleteEvent) {
+        navigate(`../dashboard`);
+      } else {
+        console.error(`Unable to delete event: ${eventId}`);
+      }
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -68,12 +98,12 @@ function Event() {
                     <Button className="m-1">Update</Button>
                   </Col>
                 </Link>
-                <Link
-                  to={{}}>
-                  <Col className="d-grid">
-                    <Button className="m-1" variant="warning">Delete</Button>
-                  </Col>
-                </Link>
+                <Col className="d-grid">
+                  <Button
+                    className="m-1" 
+                    variant="warning"
+                    onClick={handleDeleteButton}>Delete</Button>
+                </Col>
               </Row>
             ) : (
               <Link

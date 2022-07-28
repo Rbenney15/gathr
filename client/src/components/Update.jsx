@@ -48,7 +48,7 @@ function UpdateEvent() {
         variables: { ...formState, eventId },
       });
 
-      navigate(`../event/${eventId}`, { replace: true });
+      navigate(`../event/${eventId}`);
 
       console.log(data);
     } catch (e) {

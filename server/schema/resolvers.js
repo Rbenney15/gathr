@@ -164,15 +164,15 @@ const resolvers = {
 
       return updatedEvent;
     },
-    deleteEvent: async (parent, { _id }, context) => {
+    deleteEvent: async (parent, { eventId }, context) => {
       // Logged-in User only <-- then add authentication for User == host
       if (context.user) {
         // Find Event and delete
-        await Event.findByIdAndDelete(_id);
+        await Event.findByIdAndDelete(eventId);
 
         // Remove Attendees & Items
-        await Attendee.deleteMany({ eventId: _id });
-        await Item.deleteMany({ eventId: _id });
+        await Attendee.deleteMany({ eventId: eventId });
+        await Item.deleteMany({ eventId: eventId });
 
         return true;
       }

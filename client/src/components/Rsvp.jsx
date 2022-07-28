@@ -6,11 +6,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Container from 'react-bootstrap/Container';
+import ListGroup from "react-bootstrap/esm/ListGroup";
 
 import { QUERY_EVENT_DETAILS } from "../utils/queries";
-import { useQuery, useMutation } from "@apollo/client";
 import { SEND_RSVP } from "../utils/mutations";
-import ListGroup from "react-bootstrap/esm/ListGroup";
+import { useQuery, useMutation } from "@apollo/client";
 
 function Rsvp() {
   const { id: eventId } = useParams();
