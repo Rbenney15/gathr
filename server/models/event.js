@@ -25,9 +25,8 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    date: {
-      type: Date,
-      get: timestamp => dateFormat(timestamp)
+    timestamp: {
+      type: String
     },
     description: {
       type: String,
@@ -54,6 +53,9 @@ const eventSchema = new Schema(
   }
 );
 
+eventSchema.virtual('date').get(function() {
+  return dateFormat(this.timestamp);
+})
 eventSchema.virtual('completed').get(function() {
   // return event date before current date
 });
