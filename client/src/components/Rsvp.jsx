@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import Container from 'react-bootstrap/Container';
 
 import { QUERY_EVENT_DETAILS } from "../utils/queries";
 import { useQuery, useMutation } from "@apollo/client";
@@ -56,48 +57,52 @@ function Rsvp() {
   const items = event.items;
   console.log(items);
   return (
-    <Card style={{ width: "100%" }}>
-      <Card.Body>
-        <Card.Title>RSVP</Card.Title>
-        <Form onSubmit={handleFormSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Your name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Name that the host will see"
-              name="nickname"
-              id="nickname"
-              value={formState.nickname}
-              onChange={handleChange}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Comment</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="Leave a comment for the host"
-              rows="3"
-              name="comment"
-              id="comment"
-              value={formState.comment}
-              onChange={handleChange}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            {items && items.length > 0 && (
-              <>
-                {items.map((type) => (
-                  <ListGroup.Item key={`${type._id}`} className="mb-3">
-                    <Form.Check type={type._id} id={`${type._id}`} label={`${type.name}`} />
-                  </ListGroup.Item>
-                ))}
-              </>
-            )}
-          </Form.Group>
-          <Button type='submit'>RSVP</Button>
-        </Form>
-      </Card.Body>
-    </Card>
+    <Container className='py-4'>
+    <Card bg='light'>
+        <Card.Header className='fs-3 text-center'>RSVP</Card.Header>
+            <Form 
+                onSubmit={handleFormSubmit}
+                className='mx-5'>
+            <Form.Group 
+                controlId='nickname'
+                className="mt-3">
+                <Form.Label className='fs-5'>Your name</Form.Label>
+                <Form.Control
+                type="text"
+                placeholder="Name that the host will see"
+                name="nickname"
+                id="nickname"
+                value={formState.nickname}
+                onChange={handleChange}
+                ></Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label className='fs-5'>Comment</Form.Label>
+                <Form.Control
+                as="textarea"
+                placeholder="Leave a comment for the host"
+                rows="3"
+                name="comment"
+                id="comment"
+                value={formState.comment}
+                onChange={handleChange}
+                ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+                {items && items.length > 0 && (
+                <>
+                    {items.map((item) => (
+                    <ListGroup.Item className="mb-3">
+                        <Form.Check type='checkbox' id={item.name} label={item.name} />
+                    </ListGroup.Item>
+                    ))}
+                </>
+                )}
+            </Form.Group>
+            <Button type='submit'>RSVP</Button>
+            </Form>
+      </Card>
+    </Container>
   );
 }
 

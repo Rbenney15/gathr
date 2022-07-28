@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -30,7 +30,11 @@ function Event() {
 
   return (
     <Container className="py-4">
-      <Card border="primary" bg="light" className="text-center justify-content-center">
+      <Card
+        border="primary"
+        bg="light"
+        className="text-center justify-content-center"
+      >
         <Card.Header>Share this link with your friends!</Card.Header>
         <Card.Title className="mt-3 fs-2">{event.name}</Card.Title>
         <Card.Body>
@@ -44,9 +48,11 @@ function Event() {
               <Button>Delete</Button>
             </>
           ) : (
-            <Link to={{
-              pathname: `/rsvp/${event._id}`,
-            }}>
+            <Link
+              to={{
+                pathname: `/rsvp/${event._id}`,
+              }}
+            >
               <Button>RSVP</Button>
             </Link>
           )}
@@ -65,7 +71,11 @@ function Event() {
               <Card.Subtitle>WHO'S COMING</Card.Subtitle>
               <ListGroup>
                 {event.attendees.map((attendee) => (
-                  <ListGroup.Item>{attendee.nickname}</ListGroup.Item>
+                  <>
+                    <ListGroup.Item>
+                      {attendee.nickname} is coming and says "{attendee.comment}"
+                    </ListGroup.Item>
+                  </>
                 ))}
               </ListGroup>
             </>
