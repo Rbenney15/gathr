@@ -65,6 +65,11 @@ eventSchema.virtual('attendeeCount').get(function() {
 });
 eventSchema.virtual('hasEverything').get(function() {
   // if foreach item claimed is true, return true
+  for (let item of this.items) {
+    if (!item.claimed)
+      return false;
+  }
+
   return true;
 });
 

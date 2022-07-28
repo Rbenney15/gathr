@@ -26,7 +26,7 @@ function Rsvp() {
   const items = event?.items;
   console.log(items);
 
-  const placeholder = event && event.hasEverything ? `${items.filter(item => !item.claimed).map(item => item.name).join(", ")}` : `something`
+  const placeholder = event && event.hasEverything ? `something` : `${items.filter(item => !item.claimed).map(item => item.name).join(", ")}`
 
   const [formState, setFormState] = useState({
     nickname: "",

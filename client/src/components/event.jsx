@@ -41,6 +41,8 @@ function Event() {
   const items = event.items;
   const attendees = event.attendees;
 
+  const placeholder = event && event.hasEverything ? `We've got it all!` : ``;
+
   // MUTATION DELETE EVENT
   const [deleteEvent, { error }] = useMutation(DELETE_EVENT);
   const navigate = useNavigate();
@@ -120,7 +122,8 @@ function Event() {
             <div className="mx-auto">
               <Card.Subtitle>THINGS WE NEED</Card.Subtitle>
               <ListGroup>
-                {event.items.map((item) => (
+                {placeholder}
+                {event.items.filter(item => !item.claimed).map((item) => (
                   <ListGroup.Item>{item.name}</ListGroup.Item>
                 ))}
               </ListGroup>
