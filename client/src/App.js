@@ -9,19 +9,19 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import Header from "./components/Navbar";
-import Footer from "./components/Footer";
+import Header from "../src/components/Header";
+import Footer from "../src/components/Footer";
 
-import HomePage from "./components/Homepage";
+import HomePage from "../src/components/Homepage";
 
 import Login from "../src/components/Login";
-import Signup from "./components/Signup";
+import Signup from "../src/components/Signup";
 
-import UserDash from "./components/Dashboard";
-import CreateEvent from "./components/EventCreate";
-import Event from "./components/Event";
-import Update from "./components/Update";
-import Rsvp from "./components/Rsvp";
+import UserDash from "../src/components/Dashboard";
+import CreateEvent from "../src/components/EventCreate";
+import Event from "../src/components/Event";
+import Update from "../src/components/Update";
+import Rsvp from "../src/components/Rsvp";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
