@@ -24,7 +24,7 @@ import Update from "../src/components/Update";
 import Rsvp from "../src/components/Rsvp";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
