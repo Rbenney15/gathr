@@ -38,7 +38,13 @@ const resolvers = {
       return Event.find(params)
         .sort({ createdAt: -1 })
         .populate('items')
-        .populate('attendees');
+        .populate({
+          path: 'attendees',
+          populate: {
+            path: 'items',
+            model: 'Item'
+          }
+        });
     },
     event: async (parent, { _id }) => {
       return Event.findOne({ _id })

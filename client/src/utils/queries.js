@@ -10,6 +10,8 @@ export const QUERY_ME = gql`
         _id
         name
         date
+        rawDate
+        formattedDate
         description
         items {
           _id
@@ -42,6 +44,8 @@ export const QUERY_EVENT_DETAILS = gql`
       _id
       name
       date
+      rawDate
+      formattedDate
       description
       items {
        _id
@@ -71,6 +75,7 @@ export const QUERY_EVENT_UPDATE = gql`
       _id
       name
       date
+      rawDate
       description
     }
   }

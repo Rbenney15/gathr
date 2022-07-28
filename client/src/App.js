@@ -18,6 +18,7 @@ import Footer from "./components/Footer";
 import UserDash from "./components/dashboard";
 import CreateEvent from "./components/EventCreate";
 import Event from "./components/event";
+import Update from "./components/Update";
 import Rsvp from "./components/Rsvp";
 
 const httpLink = createHttpLink({
@@ -53,6 +54,9 @@ function App() {
               <Route path="dashboard" element={<UserDash />} />
               <Route path="event" element={<Event />} >
                 <Route path=":id" element={<Event />} />
+              </Route>
+              <Route path="update" element={<Update />} >
+                <Route path=":id" element={<Update />} />
               </Route>
               <Route path="rsvp" element={<Rsvp />} >
                 <Route path=":id" element={<Rsvp />} />

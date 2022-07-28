@@ -15,6 +15,8 @@ const typeDefs = gql`
     host: String
     name: String
     date: String
+    rawDate: String
+    formattedDate: String
     completed: Boolean
     description: String
     items: [Item]

@@ -8,6 +8,7 @@ const eventSchema = new Schema(
     //   host: String
     //   name: String
     //   date: String
+    //   (v) rawDate: String
     //   (v) completed: Boolean
     //   description: String
     //   items: [Item]
@@ -27,7 +28,7 @@ const eventSchema = new Schema(
     },
     date: {
       type: Date,
-      get: timestamp => dateFormat(timestamp)
+      // get: timestamp => dateFormat(timestamp)
     },
     description: {
       type: String,
@@ -54,6 +55,16 @@ const eventSchema = new Schema(
   }
 );
 
+eventSchema.virtual('rawDate').get(function() {
+  // return event date in datepicker-usable format
+  const date = new Date(this.date);
+  const pad = (input) => input.length < 2 ? input : "0" + input;
+  const month = date.getMonth()+1;
+  return `${date.getFullYear()}-${pad(month)}-${pad(date.getDate())}`;
+});
+eventSchema.virtual('formattedDate').get(function() {
+  return dateFormat(this.date);
+});
 eventSchema.virtual('completed').get(function() {
   // return event date before current date
 });

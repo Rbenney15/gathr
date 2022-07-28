@@ -66,7 +66,7 @@ function UserDash() {
                           {event.name}
                         </Link>
                       </td>
-                      <td>{event.date}</td>
+                      <td>{event.formattedDate}</td>
                       <td className='text-center'>{event.attendeeCount}</td>
                     </tr>
                   ))}

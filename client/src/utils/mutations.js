@@ -57,6 +57,24 @@ export const SEND_RSVP = gql`
   }
 `;
 
+// export const UPDATE_EVENT = ``;
+
+export const UPDATE_EVENT = gql`
+  mutation updateEvent($eventId: ID!, $name: String, $date: String, $description: String, $items: String) {
+    updateEvents(eventId: $eventId, name: $name, date: $date, description: $description, items: $items) {
+      _id
+      host
+      name
+      date
+      description
+      items {
+        _id
+        name
+      }
+    }
+  }
+`;
+
 export const DELETE_EVENT = gql`
   mutation deleteEvent($id: ID!) {
     deleteEvent(_id: $id)
