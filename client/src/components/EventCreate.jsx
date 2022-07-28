@@ -15,6 +15,10 @@ function CreateEvent() {
     const [formState, setFormState] = useState({ name: '', description: '', date: '', items: '' });
     const [addEvent, { error }] = useMutation(ADD_EVENT);
     const navigate = useNavigate();
+    const [state, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+
+    this.forceUpdate;
 
     // update state based on form input changes
     const handleChange = (event) => {

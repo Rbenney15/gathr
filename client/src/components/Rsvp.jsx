@@ -92,8 +92,8 @@ function Rsvp() {
                 {items && items.length > 0 && (
                 <>
                     {items.map((item) => (
-                    <ListGroup.Item className="mb-3">
-                        <Form.Check type='checkbox' id={item.name} label={item.name} />
+                    <ListGroup.Item className="mb-3">{item.name}
+                        
                     </ListGroup.Item>
                     ))}
                 </>

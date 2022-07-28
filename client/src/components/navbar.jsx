@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import Auth from "../utils/auth";
 
+import logo from "../logo.png";
+
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 
@@ -21,7 +23,13 @@ function Header () {
     return (
         <Navbar bg='dark' variant='dark'>
             <Container>
-                <Navbar.Brand href='/'>Gathr</Navbar.Brand>
+                <Navbar.Brand href='/'>
+                    <img
+                        src={logo}
+                        height='40'
+                        className='d-inline-block align-top'
+                        alt='Gathr logo' />
+                </Navbar.Brand>
                 <Nav className='justify-content-right'>
                     {Auth.loggedIn() ? (
                         <>
