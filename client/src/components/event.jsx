@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -81,7 +81,7 @@ function Event() {
             </>
           )}
         </Card.Body>
-        <div className="mt-3 m-5">
+        <div className="mt-3 m-5 w-50 mx-auto">
           {" "}
           {Auth.loggedIn() ? (
             <Row>
