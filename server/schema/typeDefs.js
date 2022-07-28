@@ -16,8 +16,6 @@ const typeDefs = gql`
     name: String
     timestamp: String
     date: String
-    rawDate: String
-    formattedDate: String
     completed: Boolean
     description: String
     items: [Item]

@@ -36,7 +36,7 @@ const resolvers = {
     events: async (parent, { username }) => {
       const params = username? { username } : {};
       return Event.find(params)
-        .sort({ createdAt: -1 })
+        .sort({ timestamp: -1 })
         .populate('items')
         .populate({
           path: 'attendees',
@@ -173,7 +173,11 @@ const resolvers = {
         // Remove Attendees & Items
         await Attendee.deleteMany({ eventId: _id });
         await Item.deleteMany({ eventId: _id });
+
+        return true;
       }
+
+      throw new AuthenticationError('You must be logged in to delete an event');
     },
     updateEvent: async (parent, { _id, name, date, description, items }, context) => {
       if (context.user) {

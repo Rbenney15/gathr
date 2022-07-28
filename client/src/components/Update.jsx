@@ -20,7 +20,6 @@ function UpdateEvent() {
   });
 
   const event = data?.event || {};
-
   console.log(event);
 
   // Use update mutation
@@ -54,6 +53,10 @@ function UpdateEvent() {
       console.error(e);
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!Auth.loggedIn()) {
     return (
@@ -90,8 +93,7 @@ function UpdateEvent() {
             <Form.Control
               type='date'
               name='date'
-              value={event.rawDate}
-              // value='2026-05-24'
+              defaultValue={event.timestamp}
               id='date' />
           </Form.Group>
           <Form.Group

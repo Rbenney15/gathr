@@ -31,6 +31,7 @@ function UserDash() {
     );
   }
   const events = user.events;
+  console.log(events);
 
   return (
     <Container className='py-4'>
@@ -66,7 +67,7 @@ function UserDash() {
                           {event.name}
                         </Link>
                       </td>
-                      <td>{event.formattedDate}</td>
+                      <td>{event.date}</td>
                       <td className='text-center'>{event.attendeeCount}</td>
                     </tr>
                   ))}

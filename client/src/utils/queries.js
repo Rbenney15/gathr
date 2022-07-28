@@ -9,9 +9,8 @@ export const QUERY_ME = gql`
       events {
         _id
         name
+        timestamp
         date
-        rawDate
-        formattedDate
         description
         items {
           _id
@@ -43,9 +42,8 @@ export const QUERY_EVENT_DETAILS = gql`
     event(_id: $id) {
       _id
       name
+      timestamp
       date
-      rawDate
-      formattedDate
       description
       items {
        _id
