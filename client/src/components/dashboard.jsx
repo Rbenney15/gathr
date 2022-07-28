@@ -63,6 +63,7 @@ function UserDash() {
                           to={{
                             pathname: `/event/${event._id}`,
                           }}
+                          style={{ textDecoration: 'none', color: 'black'}}
                         >
                           {event.name}
                         </Link>
