@@ -30,18 +30,32 @@ function Event() {
 
   return (
     <Container className="py-4">
-      <Card border="primary" bg="light" className="text-center justify-content-center">
+      <Card
+        border="primary"
+        bg="light"
+        className="text-center justify-content-center"
+      >
         <Card.Header>Share this link with your friends!</Card.Header>
         <Card.Title className="mt-3 fs-2">{event.name}</Card.Title>
         <Card.Body>
-            <div>
-                <Card.Title>WHEN</Card.Title>
-                <Card.Text>{event.date}</Card.Text>
-            </div>
-            <div className="mt-3">
-                <Card.Title>WHAT</Card.Title>
-                <Card.Text>{event.description}</Card.Text>
-            </div>
+          <Card.Subtitle>WHEN</Card.Subtitle>
+          <Card.Text>{event.date}</Card.Text>
+          <Card.Subtitle>WHAT</Card.Subtitle>
+          <Card.Text>{event.description}</Card.Text>
+          {Auth.loggedIn() ? (
+            <>
+              <Button>Update</Button>
+              <Button>Delete</Button>
+            </>
+          ) : (
+            <Link
+              to={{
+                pathname: `/rsvp/${event._id}`,
+              }}
+            >
+              <Button>RSVP</Button>
+            </Link>
+          )}
           {items && items.length > 0 && (
             <div className="w-50 p-4 mx-auto">
               <Card.Title>Things We Need for the Party</Card.Title>
@@ -57,7 +71,11 @@ function Event() {
               <Card.Subtitle>WHO'S COMING</Card.Subtitle>
               <ListGroup>
                 {event.attendees.map((attendee) => (
-                  <ListGroup.Item>{attendee.nickname}</ListGroup.Item>
+                  <>
+                    <ListGroup.Item>
+                      {attendee.nickname} is coming and says "{attendee.comment}"
+                    </ListGroup.Item>
+                  </>
                 ))}
               </ListGroup>
             </>
@@ -71,7 +89,7 @@ function Event() {
                 <Button>Update</Button>
               </Col>
               <Col className="d-grid">
-                <Button variant='warning'>Delete</Button>
+                <Button variant="warning">Delete</Button>
               </Col>
             </Row>
           ) : (

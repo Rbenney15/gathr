@@ -5,14 +5,11 @@ import Auth from '../utils/auth';
 import { ADD_EVENT } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
+// bootstrap components
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
-// bootstrap components
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
 
 function CreateEvent() {
     const [formState, setFormState] = useState({ name: '', description: '', date: '', items: '' });
@@ -45,13 +42,6 @@ function CreateEvent() {
         console.error(e);
       }
 
-      // // clear form values
-      // setFormState({
-      //   name: '',
-      //   date: '',
-      //   description: '',
-      //   items: '',
-      // });
     };
     if (!Auth.loggedIn()) {
       return (
@@ -76,21 +66,25 @@ function CreateEvent() {
             <Form.Control 
               type='event-name' 
               name='name' 
-              placeholder='What is the name of the event?'
+              placeholder='What is the name of the event?' 
+              // id='name' 
+              value={formState.name}
+              onChange={handleChange} 
             />
           </Form.Group>
           <Form.Group 
-            controlId='event-time'
+            controlId='date'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Date:</Form.Label>
             <Form.Control 
               type='date' 
-              name='date'
+              name='date' 
+              // id='date' 
               value={formState.date}
               onChange={handleChange} />
           </Form.Group>
           <Form.Group 
-            controlId='event-desc'
+            controlId='description'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Description:</Form.Label>
             <Form.Control 
