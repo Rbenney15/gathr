@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -34,22 +34,14 @@ function Event() {
         <Card.Header>Share this link with your friends!</Card.Header>
         <Card.Title className="mt-3 fs-2">{event.name}</Card.Title>
         <Card.Body>
-          <Card.Subtitle>WHEN</Card.Subtitle>
-          <Card.Text>{event.date}</Card.Text>
-          <Card.Subtitle>WHAT</Card.Subtitle>
-          <Card.Text>{event.description}</Card.Text>
-          {Auth.loggedIn() ? (
-            <>
-              <Button>Update</Button>
-              <Button>Delete</Button>
-            </>
-          ) : (
-            <Link to={{
-              pathname: `/rsvp/${event._id}`,
-            }}>
-              <Button>RSVP</Button>
-            </Link>
-          )}
+            <div>
+                <Card.Title>WHEN</Card.Title>
+                <Card.Text>{event.date}</Card.Text>
+            </div>
+            <div className="mt-3">
+                <Card.Title>WHAT</Card.Title>
+                <Card.Text>{event.description}</Card.Text>
+            </div>
           {items && items.length > 0 && (
             <div className="w-50 p-4 mx-auto">
               <Card.Title>Things We Need for the Party</Card.Title>
@@ -71,7 +63,7 @@ function Event() {
             </>
           )}
         </Card.Body>
-        <div className="mt-3 m-5">
+        <div className="mt-3 m-5 w-50 mx-auto">
           {" "}
           {Auth.loggedIn() ? (
             <Row>

@@ -70,14 +70,13 @@ function CreateEvent() {
           onSubmit={handleFormSubmit}
           className='mx-5'>
           <Form.Group 
-            controlId='event-name'
+            controlId='name'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Name:</Form.Label>
             <Form.Control 
               type='event-name' 
               name='name' 
-              placeholder='What is the name of the event?' 
-              id='name' 
+              placeholder='What is the name of the event?'
             />
           </Form.Group>
           <Form.Group 
@@ -86,8 +85,9 @@ function CreateEvent() {
             <Form.Label className='fs-5'>Event Date:</Form.Label>
             <Form.Control 
               type='date' 
-              name='date' 
-              id='date' />
+              name='date'
+              value={formState.date}
+              onChange={handleChange} />
           </Form.Group>
           <Form.Group 
             controlId='event-desc'
