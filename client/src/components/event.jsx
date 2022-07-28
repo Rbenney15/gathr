@@ -65,7 +65,7 @@ function Event() {
               <Card.Subtitle>WHO'S COMING</Card.Subtitle>
               <ListGroup>
                 {event.attendees.map((attendee) => (
-                  <ListGroup.Item>{attendee.nickname}</ListGroup.Item>
+                  <ListGroup.Item>{attendee.nickname} is coming</ListGroup.Item>
                 ))}
               </ListGroup>
             </>
