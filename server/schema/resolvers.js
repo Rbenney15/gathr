@@ -179,7 +179,7 @@ const resolvers = {
 
       throw new AuthenticationError('You must be logged in to delete an event');
     },
-    updateEvent: async (parent, { _id, name, date, description, items }, context) => {
+    updateEvent: async (parent, { eventId, name, date, description, items }, context) => {
       if (context.user) {
         // Update name, date, description if supplied
         let updateQuery = {};
@@ -189,7 +189,7 @@ const resolvers = {
         if (description) updateQuery = { ...updateQuery, description };
 
         const updatedEvent = await Event.findByIdAndUpdate(
-          _id,
+          eventId,
           { $set: updateQuery },
           { new: true });
 
@@ -201,7 +201,7 @@ const resolvers = {
             // Create Item object
             const newItem = await Item.create({
               name: item,
-              eventId: _id
+              eventId: eventId
             });
             updatedEvent.items.push(newItem);
           }

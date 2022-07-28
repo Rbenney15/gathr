@@ -20,10 +20,11 @@ function UpdateEvent() {
   });
 
   const event = data?.event || {};
-  console.log(event);
 
   // Use update mutation
-  const [formState, setFormState] = useState({ name: '', description: '', date: '', items: '' });
+  const [formState, setFormState] = useState(
+    { name: event.name, description: event.description, timestamp: event.timestamp, items: '' }
+  );
   const [updateEvent, { error }] = useMutation(UPDATE_EVENT);
   const navigate = useNavigate();
 
@@ -42,8 +43,9 @@ function UpdateEvent() {
     event.preventDefault();
 
     try {
+      console.log({ ...formState, eventId });
       const { data } = await updateEvent({
-        variables: { ...formState },
+        variables: { ...formState, eventId },
       });
 
       navigate(`../event/${eventId}`, { replace: true });
@@ -75,50 +77,47 @@ function UpdateEvent() {
           onSubmit={handleFormSubmit}
           className='mx-5'>
           <Form.Group
-            controlId='event-name'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Name:</Form.Label>
             <Form.Control
-              type='event-name'
+              type='text'
               name='name'
-              defaultValue={event.name}
-              placeholder='Rename the event?'
+              // defaultValue={event.name}
+              value={formState.name}
               id='name'
-            />
+              onChange={handleChange} />
           </Form.Group>
           <Form.Group
-            controlId='event-time'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Date:</Form.Label>
             <Form.Control
               type='date'
-              name='date'
-              defaultValue={event.timestamp}
-              id='date' />
+              name='timestamp'
+              value={formState.timestamp}
+              id='timestamp'
+              onChange={handleChange} />
           </Form.Group>
           <Form.Group
-            controlId='event-desc'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Description:</Form.Label>
             <Form.Control
               as='textarea'
               name='description'
-              defaultValue={event.description}
               rows='3'
-              placeholder='Change the event details?'
               value={formState.description}
+              id='description'
               onChange={handleChange} />
           </Form.Group>
           <Form.Group
-            controlId='items'
             className='mt-3'>
             <Form.Label className='fs-5'>Additional Items:</Form.Label>
             <Form.Control
               as='textarea'
               name='items'
+              placeholder={`${event.items.map(item => item.name).join(", ")}... what else?`}
               rows='3'
-              placeholder='Add any additional items?'
               value={formState.items}
+              id='items'
               onChange={handleChange} />
           </Form.Group>
 

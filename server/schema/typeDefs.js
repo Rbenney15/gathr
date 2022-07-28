@@ -63,7 +63,7 @@ const typeDefs = gql`
     addItem(eventId: ID!, name: String!): Event
     sendRSVP(eventId: ID!, nickname: String!, comment: String, items: String): Event
     deleteEvent(_id: ID!): Boolean
-    updateEvent(_id: ID!, name: String, date: String, description: String, items: String): Event
+    updateEvent(eventId: ID!, name: String, date: String, description: String, items: String): Event
   }
 `;
 
