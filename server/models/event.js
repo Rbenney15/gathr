@@ -3,6 +3,7 @@ const dateFormat = require('../utils/dateFormat');
 
 const eventSchema = new Schema(
   {
+    // Cleanup for future dev:
     // type Event {
     //   _id: ID
     //   host: String
@@ -58,6 +59,7 @@ eventSchema.virtual('date').get(function() {
   return dateFormat(this.timestamp);
 })
 eventSchema.virtual('completed').get(function() {
+  // Future dev for dashboard style
   // return event date before current date
 });
 eventSchema.virtual('attendeeCount').get(function() {

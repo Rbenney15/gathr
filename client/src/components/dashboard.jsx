@@ -1,27 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Queries
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
-// bootstrap components
 
+// Bootstrap components
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 
 function UserDash() {
-  // window.location.reload();
-
+  // Query Event
   const { loading, data, error } = useQuery(QUERY_ME);
+  
   const user = data?.me || {};
+  const events = user.events;
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  // Auth
   if (!Auth.loggedIn()) {
     return (
       <h4>
@@ -30,8 +29,10 @@ function UserDash() {
       </h4>
     );
   }
-  const events = user.events;
-  console.log(events);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container className='py-4'>
@@ -63,7 +64,7 @@ function UserDash() {
                           to={{
                             pathname: `/event/${event._id}`,
                           }}
-                          style={{ textDecoration: 'none', color: 'black'}}
+                          style={{ textDecoration: 'none', color: 'black' }}
                         >
                           {event.name}
                         </Link>
@@ -79,12 +80,12 @@ function UserDash() {
           <Link to="/create-event">
             <div className='d-grid mx-auto'>
               <Button
-                type="submit" 
+                type="submit"
                 className="btn btn-primary m-3"
                 size='small'>
                 Create New Event
               </Button>
-              </div>
+            </div>
           </Link>
         </Card.Body>
       </Card>

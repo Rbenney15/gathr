@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import Auth from '../utils/auth';
 
+// Queries/Mutations
 import { QUERY_EVENT_DETAILS } from '../utils/queries';
 import { UPDATE_EVENT } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 
-// bootstrap components
+// Auth
+import Auth from '../utils/auth';
+
+// Bootstrap components
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function UpdateEvent() {
-  // Query Event information
+  // Query Event
   const { id: eventId } = useParams();
   const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
     variables: { id: eventId }
@@ -21,14 +24,14 @@ function UpdateEvent() {
 
   const event = data?.event || {};
 
-  // Use update mutation
+  // Mutation: update Event
   const [formState, setFormState] = useState(
     { name: event.name, description: event.description, timestamp: event.timestamp, items: '' }
   );
   const [updateEvent, { error }] = useMutation(UPDATE_EVENT);
   const navigate = useNavigate();
 
-  // update state based on form input changes
+  // Update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -38,7 +41,7 @@ function UpdateEvent() {
     });
   };
 
-  // submit form
+  // Submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -49,17 +52,12 @@ function UpdateEvent() {
       });
 
       navigate(`../event/${eventId}`);
-
-      console.log(data);
     } catch (e) {
       console.error(e);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  // Auth
   if (!Auth.loggedIn()) {
     return (
       <h4>
@@ -68,6 +66,12 @@ function UpdateEvent() {
       </h4>
     );
   }
+
+  // Loading
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Container
       className='py-4'>
@@ -121,13 +125,11 @@ function UpdateEvent() {
               id='items'
               onChange={handleChange} />
           </Form.Group>
-
           <Button
             type='submit'
             className='btn btn-primary m-3 float-end'>
             Update Event!
           </Button>
-
         </Form>
       </Card>
     </Container>

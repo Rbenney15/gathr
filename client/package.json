@@ -1,7 +1,7 @@
 {
-  "name": "client",
+  "name": "gathr",
   "version": "1.0.0",
-  "description": "",
+  "description": "Host, Plan, Gather your next event",
   "main": "index.js",
   "dependencies": {
     "@apollo/client": "^3.6.9",

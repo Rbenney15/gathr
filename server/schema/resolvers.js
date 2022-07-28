@@ -4,6 +4,7 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
+    // Cleanup for future dev:
     // type Query {
     //   me: User
     //   users: [User]
@@ -23,6 +24,7 @@ const resolvers = {
   
         throw new AuthenticationError('Not logged in');
       },
+    // Remove in future dev?
     users: async () => {
       return User.find()
         .select('-__v -password')
@@ -61,6 +63,7 @@ const resolvers = {
   
 
   Mutation: {
+    // Cleanup for future dev:
     // type Mutation {
     //   login(email: String!, password: String!): Auth
     //   addUser(username: String!, email: String!, password: String!): Auth

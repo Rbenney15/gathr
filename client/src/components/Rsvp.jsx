@@ -1,32 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-// bootstrap components
+// Queries/Mutations
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_EVENT_DETAILS } from "../utils/queries";
+import { SEND_RSVP } from "../utils/mutations";
+
+// Bootstrap components
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Container from 'react-bootstrap/Container';
-import ListGroup from "react-bootstrap/esm/ListGroup";
-
-import { QUERY_EVENT_DETAILS } from "../utils/queries";
-import { SEND_RSVP } from "../utils/mutations";
-import { useQuery, useMutation } from "@apollo/client";
 
 function Rsvp() {
+  // Query: Event
   const { id: eventId } = useParams();
-  const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
+  const { data } = useQuery(QUERY_EVENT_DETAILS, {
     variables: { id: eventId },
   });
 
+  const event = data?.event || {};
+  const items = event?.items;
+
+  // Build Item list
+  const placeholder = (event && items && event.hasEverything) ? `something` : `${items.filter(item => !item.claimed).map(item => item.name).join(", ")}`
+
+  // Mutation: send RSVP
   const [sendRsvp, { error }] = useMutation(SEND_RSVP);
   const navigate = useNavigate();
-
-  const event = data?.event || {};
-  console.log(event);
-  const items = event?.items;
-  console.log(items);
-
-  const placeholder = event && event.hasEverything ? `something` : `${items.filter(item => !item.claimed).map(item => item.name).join(", ")}`
 
   const [formState, setFormState] = useState({
     nickname: "",
@@ -34,7 +35,7 @@ function Rsvp() {
     items: "",
   });
 
-  // update state based on form input changes
+  // Update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -44,7 +45,7 @@ function Rsvp() {
     });
   };
 
-  // submit form
+  // Submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -54,8 +55,6 @@ function Rsvp() {
       });
 
       navigate(`../event/${eventId}`, { replace: true });
-
-      console.log(data);
     } catch (e) {
       console.error(e);
     }
@@ -76,7 +75,6 @@ function Rsvp() {
               type="text"
               placeholder="Name that the host will see"
               name="nickname"
-              id="nickname"
               value={formState.nickname}
               onChange={handleChange}
             ></Form.Control>
@@ -88,35 +86,22 @@ function Rsvp() {
               placeholder="Leave a comment for the host"
               rows="3"
               name="comment"
-              id="comment"
               value={formState.comment}
               onChange={handleChange}
             ></Form.Control>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label classname='fs-5'>What can you bring?</Form.Label>
+            <Form.Label className='fs-5'>What can you bring?</Form.Label>
             <Form.Control
               as="textarea"
               placeholder={`Can you bring ${placeholder}?`}
               rows="3"
               name="items"
-              id="items"
               value={formState.items}
               onChange={handleChange}
             >
             </Form.Control>
           </Form.Group>
-          {/* <Form.Group>
-                {items && items.length > 0 && (
-                <>
-                    {items.map((item) => (
-                    <ListGroup.Item className="mb-3">
-                        <Form.Check type='checkbox' id={item.name} label={item.name} />
-                    </ListGroup.Item>
-                    ))}
-                </>
-                )}
-            </Form.Group> */}
           <Button type='submit'>RSVP</Button>
         </Form>
       </Card>

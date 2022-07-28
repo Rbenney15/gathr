@@ -3,6 +3,7 @@ const dateFormat = require('../utils/dateFormat');
 
 const attendeeSchema = new Schema(
   {
+    // Cleanup for future dev:
     // type Attendee {
     //   _id: ID
     //   eventId: String

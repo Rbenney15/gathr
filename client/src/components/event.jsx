@@ -1,49 +1,40 @@
 import { React, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+// Queries/Mutations
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_EVENT_DETAILS } from "../utils/queries";
+import { DELETE_EVENT } from "../utils/mutations";
+
+// Auth
+import Auth from "../utils/auth";
+
+// Copy URL
+// import copy from 'copy-to-clipboard';
+
+// Bootstrap components
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import copy from 'copy-to-clipboard';
-
-import Auth from "../utils/auth";
-
-import { QUERY_EVENT_DETAILS } from "../utils/queries";
-import { DELETE_EVENT } from "../utils/mutations";
-import { useQuery, useMutation } from "@apollo/client";
 
 function Event() {
-  // COPY BUTTON
-  const [copied, setCopied] = useState(false);
-
-  function copy() {
-    const el = document.createElement('input');
-    el.value = window.location.href;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    setCopied(true);
-  }
-
-  // QUERY EVENT
+  // Query: Event
   const { id: eventId } = useParams();
   const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
     variables: { id: eventId },
   });
 
   const event = data?.event || {};
-  console.log(event);
-
   const items = event.items;
   const attendees = event.attendees;
 
-  const placeholder = event && event.hasEverything ? `We've got it all!` : ``;
+  // Build Item list
+  const itemListPlaceholder = event && event.hasEverything ? `We've got it all!` : ``;
 
-  // MUTATION DELETE EVENT
+  // Mutation: delete Event
   const [deleteEvent, { error }] = useMutation(DELETE_EVENT);
   const navigate = useNavigate();
 
@@ -54,8 +45,6 @@ function Event() {
       const { data } = await deleteEvent({
         variables: { eventId }
       });
-
-      console.log(data.deleteEvent);
 
       if (data.deleteEvent) {
         navigate(`../dashboard`);
@@ -68,6 +57,18 @@ function Event() {
     }
   }
 
+  // Copy button
+  const [copied, setCopied] = useState(false);
+
+  function copy() {
+    const el = document.createElement('input');
+    el.value = window.location.href;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    setCopied(true);
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -92,19 +93,23 @@ function Event() {
             {" "}
             {Auth.loggedIn() ? (
               <Row>
-                <Link
-                  to={{
-                    pathname: `/update/${event._id}`,
-                  }}>
-                  <Col className="d-grid">
-                    <Button className="m-1">Update</Button>
-                  </Col>
-                </Link>
                 <Col className="d-grid">
-                  <Button
-                    className="m-1" 
-                    variant="warning"
-                    onClick={handleDeleteButton}>Delete</Button>
+                  <Button className="m-1">
+                    <Link
+                      to={{ pathname: `/update/${event._id}` }}
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      Update
+                    </Link>
+                  </Button>
+                </Col>
+                <Col className="d-grid">
+                  <>
+                    <Button
+                      className="m-1"
+                      variant="warning"
+                      onClick={handleDeleteButton}>Delete</Button>
+                  </>
                 </Col>
               </Row>
             ) : (
@@ -122,7 +127,7 @@ function Event() {
             <div className="mx-auto">
               <Card.Subtitle>THINGS WE NEED</Card.Subtitle>
               <ListGroup>
-                {placeholder}
+                {itemListPlaceholder}
                 {event.items.filter(item => !item.claimed).map((item) => (
                   <ListGroup.Item>{item.name}</ListGroup.Item>
                 ))}
@@ -137,7 +142,7 @@ function Event() {
                   <>
                     <ListGroup.Item>
                       {/* Attendee has stuff */}
-                      {attendee.items && attendee.items.length > 0 ? 
+                      {attendee.items && attendee.items.length > 0 ?
                         (
                           <>
                             {attendee.nickname} is bringing {attendee.items.map(item => item.name).join(", ")}
@@ -148,15 +153,14 @@ function Event() {
                           </>
                         )
                       }
-                      {/* Attendee has stuff */}
+                      {/* Attendee has a comment */}
                       {attendee.comment &&
                         (
-                          <div style={ {text_decoration: 'underline'} }>
+                          <div style={{ text_decoration: 'underline' }}>
                             <i>"{attendee.comment}"</i>
                           </div>
                         )
                       }
-                      {/* and says "{attendee.comment}" */}
                     </ListGroup.Item>
                   </>
                 ))}

@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server-express');
 
+// Trim queries/mutations and return values to needed fields only
 const typeDefs = gql`
   type User {
     _id: ID
