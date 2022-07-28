@@ -3,11 +3,13 @@ const dateFormat = require('../utils/dateFormat');
 
 const eventSchema = new Schema(
   {
+    // Cleanup for future dev:
     // type Event {
     //   _id: ID
     //   host: String
     //   name: String
     //   date: String
+    //   (v) rawDate: String
     //   (v) completed: Boolean
     //   description: String
     //   items: [Item]
@@ -25,9 +27,8 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    date: {
-      type: Date,
-      get: timestamp => dateFormat(timestamp)
+    timestamp: {
+      type: String
     },
     description: {
       type: String,
@@ -54,7 +55,11 @@ const eventSchema = new Schema(
   }
 );
 
+eventSchema.virtual('date').get(function() {
+  return dateFormat(this.timestamp);
+})
 eventSchema.virtual('completed').get(function() {
+  // Future dev for dashboard style
   // return event date before current date
 });
 eventSchema.virtual('attendeeCount').get(function() {
@@ -62,6 +67,12 @@ eventSchema.virtual('attendeeCount').get(function() {
 });
 eventSchema.virtual('hasEverything').get(function() {
   // if foreach item claimed is true, return true
+  for (let item of this.items) {
+    if (!item.claimed)
+      return false;
+  }
+
+  return true;
 });
 
 

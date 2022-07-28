@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,16 +9,18 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import Login from "../src/components/Login";
-import Signup from "./components/signup";
-
-import Header from "./components/navbar";
-import HomePage from "./components/homepage";
+import Header from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import UserDash from "./components/dashboard";
+import HomePage from "./components/Homepage";
+
+import Login from "../src/components/Login";
+import Signup from "./components/Signup";
+
+import UserDash from "./components/Dashboard";
 import CreateEvent from "./components/EventCreate";
-import Event from "./components/event";
+import Event from "./components/Event";
+import Update from "./components/Update";
 import Rsvp from "./components/Rsvp";
 
 const httpLink = createHttpLink({
@@ -53,6 +56,9 @@ function App() {
               <Route path="dashboard" element={<UserDash />} />
               <Route path="event" element={<Event />} >
                 <Route path=":id" element={<Event />} />
+              </Route>
+              <Route path="update" element={<Update />} >
+                <Route path=":id" element={<Update />} />
               </Route>
               <Route path="rsvp" element={<Rsvp />} >
                 <Route path=":id" element={<Rsvp />} />

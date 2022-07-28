@@ -4,6 +4,7 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
+    // Cleanup for future dev:
     // type Query {
     //   me: User
     //   users: [User]
@@ -23,6 +24,7 @@ const resolvers = {
   
         throw new AuthenticationError('Not logged in');
       },
+    // Remove in future dev?
     users: async () => {
       return User.find()
         .select('-__v -password')
@@ -36,9 +38,15 @@ const resolvers = {
     events: async (parent, { username }) => {
       const params = username? { username } : {};
       return Event.find(params)
-        .sort({ createdAt: -1 })
+        .sort({ timestamp: -1 })
         .populate('items')
-        .populate('attendees');
+        .populate({
+          path: 'attendees',
+          populate: {
+            path: 'items',
+            model: 'Item'
+          }
+        });
     },
     event: async (parent, { _id }) => {
       return Event.findOne({ _id })
@@ -55,6 +63,7 @@ const resolvers = {
   
 
   Mutation: {
+    // Cleanup for future dev:
     // type Mutation {
     //   login(email: String!, password: String!): Auth
     //   addUser(username: String!, email: String!, password: String!): Auth
@@ -158,18 +167,22 @@ const resolvers = {
 
       return updatedEvent;
     },
-    deleteEvent: async (parent, { _id }, context) => {
+    deleteEvent: async (parent, { eventId }, context) => {
       // Logged-in User only <-- then add authentication for User == host
       if (context.user) {
         // Find Event and delete
-        await Event.findByIdAndDelete(_id);
+        await Event.findByIdAndDelete(eventId);
 
         // Remove Attendees & Items
-        await Attendee.deleteMany({ eventId: _id });
-        await Item.deleteMany({ eventId: _id });
+        await Attendee.deleteMany({ eventId: eventId });
+        await Item.deleteMany({ eventId: eventId });
+
+        return true;
       }
+
+      throw new AuthenticationError('You must be logged in to delete an event');
     },
-    updateEvent: async (parent, { _id, name, date, description, items }, context) => {
+    updateEvent: async (parent, { eventId, name, date, description, items }, context) => {
       if (context.user) {
         // Update name, date, description if supplied
         let updateQuery = {};
@@ -179,7 +192,7 @@ const resolvers = {
         if (description) updateQuery = { ...updateQuery, description };
 
         const updatedEvent = await Event.findByIdAndUpdate(
-          _id,
+          eventId,
           { $set: updateQuery },
           { new: true });
 
@@ -191,7 +204,7 @@ const resolvers = {
             // Create Item object
             const newItem = await Item.create({
               name: item,
-              eventId: _id
+              eventId: eventId
             });
             updatedEvent.items.push(newItem);
           }

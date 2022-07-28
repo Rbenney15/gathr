@@ -1,70 +1,37 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import Auth from "../utils/auth";
 
-import { useQuery } from "@apollo/client";
-import { QUERY_ME } from "../utils/queries";
-
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+// Bootstrap components
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-function Header () {
-    const { data } = useQuery(QUERY_ME);
-    const user = data?.me || {};
-
-    const logout = event => {
-        event.preventDefault();
-        Auth.logout();
-    }
-    return (
-        <Navbar bg='dark' variant='dark'>
-            <Container>
-                <Navbar.Brand href='/'>Gathr</Navbar.Brand>
-                <Nav className='justify-content-right'>
-                    {Auth.loggedIn() ? (
-                        <>
-                        <Nav.Link href='/dashboard'>My Events</Nav.Link>
-                        <Button onClick={logout} className='btn btn-primary'>Logout</Button>
-                        </>
-                    ) : (
-                        <>
-                        <Nav.Link href='/login'>Login</Nav.Link>
-                        <Nav.Link href='/signup'>Signup</Nav.Link>
-                        </>
-                    )}
-                </Nav>
-            </Container>
-        </Navbar>
-    );
+function Header() {
+  const logout = event => {
+    event.preventDefault();
+    Auth.logout();
+  }
+  return (
+    <Navbar bg='dark' variant='dark'>
+      <Container>
+        <Navbar.Brand href='/'>Gathr</Navbar.Brand>
+        <Nav className='justify-content-right'>
+          {Auth.loggedIn() ? (
+            <>
+              <Nav.Link href='/dashboard'>My Events</Nav.Link>
+              <Button onClick={logout} className='btn btn-primary'>Logout</Button>
+            </>
+          ) : (
+            <>
+              <Nav.Link href='/login'>Login</Nav.Link>
+              <Nav.Link href='/signup'>Signup</Nav.Link>
+            </>
+          )}
+        </Nav>
+      </Container>
+    </Navbar>
+  );
 }
-
-
-//         <header>
-//             <div>
-//                 <Link to='/'>
-//                     <h1>Gathr</h1>
-//                 </Link>
-
-//                 <nav>
-//                     {Auth.loggedIn() ? (
-//                         <>
-//                         <a href='/' onClick={logout}>Logout</a>
-//                         <Link to='/dashboard'>Dashboard</Link>
-//                         </>
-//                     ) : (
-//                         <>
-//                         <Link to='/login'>Login</Link>
-//                         <Link to='/signup'>Signup</Link>
-//                         </>
-//                     )}
-                    
-
-//                 </nav>
-//             </div>
-//         </header>
-//     )
-// }
 
 export default Header;

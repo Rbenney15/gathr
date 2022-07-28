@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server-express');
 
+// Trim queries/mutations and return values to needed fields only
 const typeDefs = gql`
   type User {
     _id: ID
@@ -14,6 +15,7 @@ const typeDefs = gql`
     _id: ID
     host: String
     name: String
+    timestamp: String
     date: String
     completed: Boolean
     description: String
@@ -58,11 +60,11 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addEvent(name: String!, date: String!, description: String!, items: String): Event
+    addEvent(name: String!, timestamp: String!, description: String!, items: String): Event
     addItem(eventId: ID!, name: String!): Event
     sendRSVP(eventId: ID!, nickname: String!, comment: String, items: String): Event
-    deleteEvent(_id: ID!): Boolean
-    updateEvent(_id: ID!, name: String, date: String, description: String, items: String): Event
+    deleteEvent(eventId: ID!): Boolean
+    updateEvent(eventId: ID!, name: String, date: String, description: String, items: String): Event
   }
 `;
 

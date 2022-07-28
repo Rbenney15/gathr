@@ -1,21 +1,34 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
+// Queries/Mutations
+import { QUERY_EVENT_DETAILS } from '../utils/queries';
+import { UPDATE_EVENT } from '../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
+
+// Auth
 import Auth from '../utils/auth';
 
-// Mutations
-import { useMutation } from '@apollo/client';
-import { ADD_EVENT } from '../utils/mutations';
-
 // Bootstrap components
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
-function CreateEvent() {
-  // Mutation: create Event
-  const [formState, setFormState] = useState({ name: '', description: '', date: '', items: '' });
-  const [addEvent, { error }] = useMutation(ADD_EVENT);
+function UpdateEvent() {
+  // Query Event
+  const { id: eventId } = useParams();
+  const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
+    variables: { id: eventId }
+  });
+
+  const event = data?.event || {};
+
+  // Mutation: update Event
+  const [formState, setFormState] = useState(
+    { name: event.name, description: event.description, timestamp: event.timestamp, items: '' }
+  );
+  const [updateEvent, { error }] = useMutation(UPDATE_EVENT);
   const navigate = useNavigate();
 
   // Update state based on form input changes
@@ -33,17 +46,15 @@ function CreateEvent() {
     event.preventDefault();
 
     try {
-      const { data } = await addEvent({
-        variables: { ...formState },
+      console.log({ ...formState, eventId });
+      const { data } = await updateEvent({
+        variables: { ...formState, eventId },
       });
 
-      navigate('../dashboard', { replace: true });
-
-      console.log(data);
+      navigate(`../event/${eventId}`);
     } catch (e) {
       console.error(e);
     }
-
   };
 
   // Auth
@@ -56,73 +67,73 @@ function CreateEvent() {
     );
   }
 
+  // Loading
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Container
       className='py-4'>
       <Card bg='light'>
-        <Card.Header className='fs-3 text-center'>Create a New Event</Card.Header>
+        <Card.Header className='fs-3 text-center'>Update an Event</Card.Header>
         <Form
           onSubmit={handleFormSubmit}
           className='mx-5'>
           <Form.Group
-            controlId='name'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Name:</Form.Label>
             <Form.Control
-              type='event-name'
+              type='text'
               name='name'
-              placeholder='What is the name of the event?'
-              // id='name' 
+              placeholder={event.name}
               value={formState.name}
-              onChange={handleChange}
-            />
+              id='name'
+              onChange={handleChange} />
           </Form.Group>
           <Form.Group
-            controlId='date'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Date:</Form.Label>
             <Form.Control
               type='date'
-              name='date'
-              // id='date' 
-              value={formState.date}
+              name='timestamp'
+              defaultValue={event.timestamp}
+              id='timestamp'
               onChange={handleChange} />
           </Form.Group>
           <Form.Group
-            controlId='description'
             className='mt-3'>
             <Form.Label className='fs-5'>Event Description:</Form.Label>
             <Form.Control
               as='textarea'
               name='description'
+              placeholder={event.description}
               rows='3'
-              placeholder='What is the theme of the event? Where will it be? Should attendees bring friends?'
               value={formState.description}
+              id='description'
               onChange={handleChange} />
           </Form.Group>
           <Form.Group
-            controlId='items'
             className='mt-3'>
-            <Form.Label className='fs-5'>Items to Bring:</Form.Label>
+            <Form.Label className='fs-5'>Additional Items:</Form.Label>
             <Form.Control
               as='textarea'
               name='items'
+              placeholder={`${event.items.map(item => item.name).join(", ")}... what else?`}
               rows='3'
-              placeholder='Enter a list of items you would like attendees to bring, and make sure to separate each item with a comma.'
               value={formState.items}
+              id='items'
               onChange={handleChange} />
           </Form.Group>
-
           <Button
             type='submit'
             className='btn btn-primary m-3 float-end'>
-            Create Event!
+            Update Event!
           </Button>
-
         </Form>
       </Card>
     </Container>
   )
 }
 
-export default CreateEvent;
+export default UpdateEvent;
