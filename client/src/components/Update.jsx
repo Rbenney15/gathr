@@ -82,7 +82,7 @@ function UpdateEvent() {
             <Form.Control
               type='text'
               name='name'
-              // defaultValue={event.name}
+              placeholder={event.name}
               value={formState.name}
               id='name'
               onChange={handleChange} />
@@ -93,7 +93,7 @@ function UpdateEvent() {
             <Form.Control
               type='date'
               name='timestamp'
-              value={formState.timestamp}
+              defaultValue={event.timestamp}
               id='timestamp'
               onChange={handleChange} />
           </Form.Group>
@@ -103,6 +103,7 @@ function UpdateEvent() {
             <Form.Control
               as='textarea'
               name='description'
+              placeholder={event.description}
               rows='3'
               value={formState.description}
               id='description'
