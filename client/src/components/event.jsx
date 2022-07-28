@@ -117,7 +117,7 @@ function Event() {
           </div>
 
           {items && items.length > 0 && (
-            <div className="py-1 mx-auto">
+            <div className="mx-auto">
               <Card.Subtitle>THINGS WE NEED</Card.Subtitle>
               <ListGroup>
                 {event.items.map((item) => (
@@ -127,18 +127,38 @@ function Event() {
             </div>
           )}
           {attendees && attendees.length > 0 && (
-            <>
+            <div className="pt-3">
               <Card.Subtitle>WHO'S COMING</Card.Subtitle>
               <ListGroup>
                 {event.attendees.map((attendee) => (
                   <>
                     <ListGroup.Item>
-                      {attendee.nickname} is coming and says "{attendee.comment}"
+                      {/* Attendee has stuff */}
+                      {attendee.items && attendee.items.length > 0 ? 
+                        (
+                          <>
+                            {attendee.nickname} is bringing {attendee.items.map(item => item.name).join(", ")}
+                          </>
+                        ) : (
+                          <>
+                            {attendee.nickname} is coming
+                          </>
+                        )
+                      }
+                      {/* Attendee has stuff */}
+                      {attendee.comment &&
+                        (
+                          <div style={ {text_decoration: 'underline'} }>
+                            <i>"{attendee.comment}"</i>
+                          </div>
+                        )
+                      }
+                      {/* and says "{attendee.comment}" */}
                     </ListGroup.Item>
                   </>
                 ))}
               </ListGroup>
-            </>
+            </div>
           )}
         </Card.Body>
       </Card>

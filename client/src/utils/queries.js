@@ -45,6 +45,7 @@ export const QUERY_EVENT_DETAILS = gql`
       timestamp
       date
       description
+      hasEverything
       items {
         _id
         name

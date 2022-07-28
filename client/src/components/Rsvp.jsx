@@ -17,16 +17,22 @@ function Rsvp() {
   const { loading, data } = useQuery(QUERY_EVENT_DETAILS, {
     variables: { id: eventId },
   });
+
   const [sendRsvp, { error }] = useMutation(SEND_RSVP);
   const navigate = useNavigate();
+
   const event = data?.event || {};
   console.log(event);
+  const items = event?.items;
+  console.log(items);
+
+  const placeholder = event && event.hasEverything ? `${items.filter(item => !item.claimed).map(item => item.name).join(", ")}` : `something`
 
   const [formState, setFormState] = useState({
     nickname: "",
     comment: "",
     items: "",
-  }); 
+  });
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -54,41 +60,53 @@ function Rsvp() {
       console.error(e);
     }
   };
-  const items = event.items;
-  console.log(items);
+
   return (
     <Container className='py-4'>
-    <Card bg='light'>
-        <Card.Header className='fs-3 text-center'>RSVP</Card.Header>
-            <Form 
-                onSubmit={handleFormSubmit}
-                className='mx-5'>
-            <Form.Group 
-                controlId='nickname'
-                className="mt-3">
-                <Form.Label className='fs-5'>Your name</Form.Label>
-                <Form.Control
-                type="text"
-                placeholder="Name that the host will see"
-                name="nickname"
-                id="nickname"
-                value={formState.nickname}
-                onChange={handleChange}
-                ></Form.Control>
-            </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label className='fs-5'>Comment</Form.Label>
-                <Form.Control
-                as="textarea"
-                placeholder="Leave a comment for the host"
-                rows="3"
-                name="comment"
-                id="comment"
-                value={formState.comment}
-                onChange={handleChange}
-                ></Form.Control>
-            </Form.Group>
-            <Form.Group>
+      <Card bg='light'>
+        <Card.Header className='fs-3 text-center'>RSVP:</Card.Header>
+        <Form
+          onSubmit={handleFormSubmit}
+          className='mx-5 pb-3'>
+          <Form.Group
+            controlId='nickname'
+            className="mt-3">
+            <Form.Label className='fs-5'>Your name:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Name that the host will see"
+              name="nickname"
+              id="nickname"
+              value={formState.nickname}
+              onChange={handleChange}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className='fs-5'>Comment:</Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder="Leave a comment for the host"
+              rows="3"
+              name="comment"
+              id="comment"
+              value={formState.comment}
+              onChange={handleChange}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label classname='fs-5'>What can you bring?</Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder={`Can you bring ${placeholder}?`}
+              rows="3"
+              name="items"
+              id="items"
+              value={formState.items}
+              onChange={handleChange}
+            >
+            </Form.Control>
+          </Form.Group>
+          {/* <Form.Group>
                 {items && items.length > 0 && (
                 <>
                     {items.map((item) => (
@@ -98,9 +116,9 @@ function Rsvp() {
                     ))}
                 </>
                 )}
-            </Form.Group>
-            <Button type='submit'>RSVP</Button>
-            </Form>
+            </Form.Group> */}
+          <Button type='submit'>RSVP</Button>
+        </Form>
       </Card>
     </Container>
   );
