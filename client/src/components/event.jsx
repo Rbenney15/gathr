@@ -56,10 +56,32 @@ function Event() {
           <Card.Subtitle>WHAT</Card.Subtitle>
           <Card.Text>{event.description}</Card.Text>
           
+          <div className="mt-3 m-5 w-50 mx-auto">
+            {" "}
+            {Auth.loggedIn() ? (
+              <Row>
+                <Col className="d-grid">
+                  <Button>Update</Button>
+                </Col>
+                <Col className="d-grid">
+                  <Button variant="warning">Delete</Button>
+                </Col>
+              </Row>
+            ) : (
+              <Link
+                  to={{
+                  pathname: `/rsvp/${event._id}`,
+                  }}
+              >
+              <Button>RSVP</Button>
+            </Link>
+            )}
+          </div>
+          
           {items && items.length > 0 && (
-            <div className="w-50 p-4 mx-auto">
-              <Card.Title>Things We Need for the Party</Card.Title>
-              <ListGroup variant="flush">
+            <div className="py-4 mx-auto">
+              <Card.Subtitle>THINGS WE NEED</Card.Subtitle>
+              <ListGroup>
                 {event.items.map((item) => (
                   <ListGroup.Item>{item.name}</ListGroup.Item>
                 ))}
@@ -81,27 +103,6 @@ function Event() {
             </>
           )}
         </Card.Body>
-        <div className="mt-3 m-5 w-50 mx-auto">
-          {" "}
-          {Auth.loggedIn() ? (
-            <Row>
-              <Col className="d-grid">
-                <Button>Update</Button>
-              </Col>
-              <Col className="d-grid">
-                <Button variant="warning">Delete</Button>
-              </Col>
-            </Row>
-          ) : (
-            <Link
-                to={{
-                pathname: `/rsvp/${event._id}`,
-                }}
-            >
-            <Button>RSVP</Button>
-          </Link>
-          )}
-        </div>
       </Card>
     </Container>
   );
