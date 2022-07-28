@@ -26,7 +26,7 @@ export const ADD_USER = gql`
 
 export const ADD_EVENT = gql`
   mutation addEvent($name: String!, $date: String!, $description: String!, $items: String) {
-    addEvent(name: $name, date: $date, description: $description, items: $items) {
+    addEvent(name: $name, timestamp: $date, description: $description, items: $items) {
       _id
       host
       name
@@ -56,8 +56,6 @@ export const SEND_RSVP = gql`
     }
   }
 `;
-
-// export const UPDATE_EVENT = ``;
 
 export const UPDATE_EVENT = gql`
   mutation updateEvent($eventId: ID!, $name: String, $date: String, $description: String, $items: String) {

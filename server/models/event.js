@@ -26,9 +26,8 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    date: {
-      type: Date,
-      // get: timestamp => dateFormat(timestamp)
+    timestamp: {
+      type: String
     },
     description: {
       type: String,
@@ -55,16 +54,9 @@ const eventSchema = new Schema(
   }
 );
 
-eventSchema.virtual('rawDate').get(function() {
-  // return event date in datepicker-usable format
-  const date = new Date(this.date);
-  const pad = (input) => input.length < 2 ? input : "0" + input;
-  const month = date.getMonth()+1;
-  return `${date.getFullYear()}-${pad(month)}-${pad(date.getDate())}`;
-});
-eventSchema.virtual('formattedDate').get(function() {
-  return dateFormat(this.date);
-});
+eventSchema.virtual('date').get(function() {
+  return dateFormat(this.timestamp);
+})
 eventSchema.virtual('completed').get(function() {
   // return event date before current date
 });
