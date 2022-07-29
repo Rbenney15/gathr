@@ -4,11 +4,13 @@ Host, Plan, Gather your next event!
 
 **Gathr** is a single-page application that helps groups of friends and small communities organize and manage events.
 
+
+
 # Description
 
 Event hosts can create events, ask guests to bring items, keep track of Event dates, and see who RSVPs.  Attendees can respond to invites without even creating an account.
 
-Gathr is built with the MERN stack framework, using Nodejs, MongoDB, Express.js, and React.js.  Supporting technologies are Mongoose (ODM), Apollo graphQL, React Bootstrap, and npm packages jsonwebtoken and concurrently.  The db is hosted by MongoDB Atlas and the 
+Gathr is built with the MERN stack framework, using Nodejs, MongoDB, Express.js, and React.js.  Supporting technologies are Mongoose (ODM), Apollo graphQL, React Bootstrap, and npm packages jsonwebtoken and concurrently.  The db is hosted by MongoDB Atlas and the application is hosted by Heroku.
 
 # How to Use
 
@@ -39,4 +41,4 @@ When a user who is not logged in views an event page, they will be able to submi
 
 # Collaborators
 
-Gathr was developed by [Rob Benney](github), [SD](), [SK](), and [TR]()
+Gathr was developed by [Rob Benney](github), [SD](), [Seth Keating](), and [TR]()
