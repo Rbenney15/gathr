@@ -43,4 +43,4 @@ When a user who is not logged in views an event page, they will be able to submi
 
 # Collaborators
 
-Gathr was developed by [Rob Benney](github), [SD](), [Seth Keating](), and [TR]()
+Gathr was developed by [Rob Benney](https://github.com/Rbenney15), [SD](), [Seth Keating](https://github.com/abel-baker), and [TR]()
