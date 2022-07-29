@@ -4,7 +4,9 @@ Host, Plan, Gather your next event!
 
 **Gathr** is a single-page application that helps groups of friends and small communities organize and manage events.
 
-
+![welcome](https://user-images.githubusercontent.com/2822827/181662996-076b4207-dc5c-40f1-8b69-220b746f3c53.png)
+![eventform](https://user-images.githubusercontent.com/2822827/181663072-164afaf9-4575-4262-955b-a06db78a5867.png)
+![event](https://user-images.githubusercontent.com/2822827/181663058-89f06bbc-4b29-4d41-a4a7-e22368c79a94.png)
 
 # Description
 
