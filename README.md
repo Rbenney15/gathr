@@ -1,74 +1,44 @@
-# Project 3
+# Gathr
 
-# Collaborators: 
+Host, Plan, Gather your next event!
 
-# Getting Started with Create React App
+**Gathr** is a single-page application that helps groups of friends and small communities organize and manage events.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+# Description
 
-### `npm start`
+Event hosts can create events, ask guests to bring items, keep track of Event dates, and see who RSVPs.  Attendees can respond to invites without even creating an account.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Gathr is built with the MERN stack framework, using Nodejs, MongoDB, Express.js, and React.js.  Supporting technologies are Mongoose (ODM), Apollo graphQL, React Bootstrap, and npm packages jsonwebtoken and concurrently.  The db is hosted by MongoDB Atlas and the application is hosted by Heroku.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# How to Use
 
-### `npm test`
+Visit the [deployed Gathr application](https://gathr.herokuapp.com/) hosted by Heroku.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a user account using the signup page linked to from the home page.  After your account is created, you will have access to your dashboard through "My Events", which lists your current and upcoming events.  From the homepage or the dashboard, you can click Create an Event to reach the new Event form.
 
-### `npm run build`
+When creating an event, supply an Event name, date, and description.  Supply time and address information in the description field.  In the items field, make a comma-separated list of things you would like your guests to bring.  For example, "party hats, whistles, kazoos" will make a request for party hats, whistles, and kazoos.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+After creating an event, you will be at your dashboard list of events.  Click the new event to go to its event details page.  On the events page, a logged-in host can update the event details (name, date, description) and add additional item requests, or delete the event.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+When a user who is not logged in views an event page, they will be able to submit an RSVP to that event.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Technologies Used
 
-### `npm run eject`
+- React.js
+- Node.js
+- ExpressJS
+- MongoDB
+- React Bootstrap
+- Apollo GraphQL
+- Mongoose (ODM)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Additional npm packages
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- concurrently
+- jsonwebtoken
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Collaborators
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Gathr was developed by [Rob Benney](github), [SD](), [Seth Keating](), and [TR]()
