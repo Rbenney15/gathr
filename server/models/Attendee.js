@@ -11,7 +11,7 @@ const attendeeSchema = new Schema(
     //   respondedAt: String
     //   items: [Item]
     //   (v) bringingSomething: Boolean
-    // }
+    // } 
     eventId: {
       type: String
     },
